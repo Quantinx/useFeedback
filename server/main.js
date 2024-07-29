@@ -1,8 +1,7 @@
 const express = require("express");
 const server = express();
-const PORT = 8080;
-
 require("dotenv").config();
+const PORT = process.env.SERVER_PORT;
 
 console.log({
   host: process.env.DB_HOST,
