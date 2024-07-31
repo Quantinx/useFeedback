@@ -13,7 +13,6 @@ async function createPost(user, stack, content) {
   const res = {};
 
   try {
-    //
     await db("useFeedback_posts").insert({
       user_ID: user,
       stack: stack,
@@ -28,4 +27,48 @@ async function createPost(user, stack, content) {
   return res;
 }
 
-module.exports = { getPosts, createPost };
+async function editPost(user, post = 0, stack, content) {
+  const response = {};
+  try {
+    const updatePost = await db("useFeedback_posts")
+      .where("user_ID", user)
+      .where("post_ID", post)
+      .update({ stack: stack, post_content: content });
+    if (updatePost === 1) {
+      response.status = 200;
+      response.message = "Post updated successfully";
+    } else {
+      response.status = 404;
+      response.message = "Post not found";
+    }
+  } catch (error) {
+    console.log(error);
+    response.status = 500;
+    response.message = "Post failed to update";
+  }
+  return response;
+}
+
+async function deletePost(user, post = 0) {
+  const response = {};
+  try {
+    const deleteCount = await db("useFeedback_posts")
+      .where("user_ID", user)
+      .where("post_ID", post)
+      .del();
+    if (deleteCount === 1) {
+      response.status = 200;
+      response.message = "Post deleted sucessfully";
+    } else {
+      response.status = 404;
+      response.message = "Post not found";
+    }
+  } catch (error) {
+    response.status = 500;
+    response.message = "Failed to delete post";
+    console.log(error);
+  }
+  return response;
+}
+
+module.exports = { getPosts, createPost, editPost, deletePost };
