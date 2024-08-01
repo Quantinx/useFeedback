@@ -31,7 +31,6 @@ passport.use(
     },
     async (email, password, done) => {
       const user = await getUserByEmail(email);
-      console.log(user);
       if (!user) {
         return done(null, false, { message: "No user exists" });
       }
@@ -51,12 +50,10 @@ const {
 } = require("./db/userHelpers");
 
 passport.serializeUser((user, done) => {
-  console.log("data serialized");
   done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-  console.log("data deserialized");
   done(null, user);
 });
 //
@@ -99,15 +96,18 @@ server.post("/api/register", async (req, res) => {
 });
 
 server.post("/api/login", passport.authenticate("local"), (req, res) => {
-  console.log("login endpoint pinged");
   res.json("Welcome " + req.user.email);
 });
 
 //
 
 const postRouter = require("./routes/posts");
+const commentRouter = require("./routes/comments");
+const userRouter = require("./routes/users");
 
 server.use("/api/posts", postRouter);
+server.use("/api/comments", commentRouter);
+server.use("/api/users", userRouter);
 
 server.listen(PORT, () => {
   console.log("Server running on port:" + PORT);

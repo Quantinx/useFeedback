@@ -1,3 +1,4 @@
+const { response } = require("express");
 const config = require("../knexfile");
 const knex = require("knex");
 const db = knex(config);
@@ -35,4 +36,30 @@ async function createUser(email, username, password) {
   return res;
 }
 
-module.exports = { getUserByEmail, getUserByUsername, createUser };
+async function getUserDataForProfile(userID) {
+  const response = {};
+  try {
+    const userData = await db("useFeedback_users")
+      .select(
+        "email",
+        "username",
+        "full_name",
+        "profile_content",
+        "profile_picture"
+      )
+      .where("user_ID", userID);
+    response.data = userData[0];
+    response.status = 200;
+  } catch (error) {
+    response.data = "an erorr has occured";
+    response.status = 500;
+  }
+  return response;
+}
+
+module.exports = {
+  getUserByEmail,
+  getUserByUsername,
+  createUser,
+  getUserDataForProfile,
+};
