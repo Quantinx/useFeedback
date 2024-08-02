@@ -13,11 +13,14 @@ async function createPost(user, stack, content) {
   const res = {};
 
   try {
-    await db("useFeedback_posts").insert({
-      user_ID: user,
-      stack: stack,
-      post_content: content,
-    });
+    const [postID] = await db("useFeedback_posts")
+      .insert({
+        user_ID: user,
+        stack: stack,
+        post_content: content,
+      })
+      .returning("post_ID");
+    res.post = postID;
     res.status = 200;
   } catch (error) {
     res.status = 500;
