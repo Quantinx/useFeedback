@@ -22,9 +22,9 @@ exports.up = function (knex) {
       table.increments("post_ID").primary();
       table
         .uuid("user_ID")
+        .notNullable()
         .references("user_ID")
         .inTable("useFeedback_users")
-        .notNullable()
         .onDelete("CASCADE");
       table
         .string("stack")
@@ -32,7 +32,9 @@ exports.up = function (knex) {
         .inTable("useFeedback_stacks")
         .notNullable()
         .onDelete("CASCADE");
-      table.string("post_content").notNullable();
+      table.string("post_title").notNullable();
+      table.string("post_content", 5000).notNullable();
+      table.boolean("edited").defaultTo(false);
       table.dateTime("date_created").defaultTo(knex.fn.now());
     })
     .createTable("useFeedback_comments", function (table) {
@@ -48,7 +50,9 @@ exports.up = function (knex) {
         .references("user_ID")
         .inTable("useFeedback_users")
         .onDelete("CASCADE");
-      table.string("comment_content");
+
+      table.string("comment_content", 5000).notNullable();
+      table.boolean("edited").defaultTo(false);
       table.dateTime("date_created").defaultTo(knex.fn.now());
     });
 };
