@@ -1,10 +1,11 @@
-import { useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext, useState } from "react";
 import useBackendService from "../../../hooks/useBackendService";
 import { UserContextProvider } from "../../../context/userContext";
 
 export default function LoginForm({ closeWindow }) {
   const { data, loading, status, error, sendData } = useBackendService();
-  const { setUserStatus, checkLogin } = useContext(UserContextProvider);
+  const { checkLogin } = useContext(UserContextProvider);
+  const [message, setMessage] = useState();
 
   function handleClick(e) {
     e.preventDefault();
@@ -20,12 +21,16 @@ export default function LoginForm({ closeWindow }) {
     console.log(status);
     if (status === 200) {
       checkLogin();
-      closeWindow();
+      setMessage("login successful");
+      setTimeout(() => {
+        closeWindow();
+      }, 2000);
     }
   }, [loading]);
 
   const emailRef = useRef();
   const passwordRef = useRef();
+
   return (
     <>
       <form>
@@ -51,6 +56,7 @@ export default function LoginForm({ closeWindow }) {
         <button type="submit" onClick={handleClick}>
           Login
         </button>
+        <div>{message}</div>
       </form>
     </>
   );

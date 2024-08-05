@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import "./App.css";
 import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   const [data, setData] = useState({});
@@ -19,6 +20,7 @@ function App() {
   return (
     <>
       <Header />
+      <Navbar />
       <div>Hello world</div>
       {data.data && (
         <div>
