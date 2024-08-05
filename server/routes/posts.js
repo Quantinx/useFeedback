@@ -9,7 +9,9 @@ const {
 } = require("../db/postHelpers");
 
 postRouter.get("/", async (req, res) => {
-  const posts = await getPosts();
+  const category = req.query.category;
+  const post = req.query.post;
+  const posts = await getPosts(category, post);
   res.json({
     data: posts,
   });

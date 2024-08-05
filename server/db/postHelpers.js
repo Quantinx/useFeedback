@@ -2,10 +2,36 @@ const config = require("../knexfile");
 const knex = require("knex");
 const db = knex(config);
 
-async function getPosts() {
-  const posts = await db("useFeedback_posts").then((post) => {
-    return post;
-  });
+async function getPosts(category, post) {
+  const query = db("useFeedback_posts");
+
+  if (category && category !== "*") {
+    query.where("stack", category);
+  }
+
+  if (post && post !== "*") {
+    query.where("post_ID", post);
+  }
+
+  const posts = await query
+    .join(
+      "useFeedback_users",
+      "useFeedback_posts.user_ID",
+      "=",
+      "useFeedback_users.user_ID"
+    )
+    .select(
+      "post_ID",
+      "useFeedback_posts.user_ID",
+      "stack",
+      "post_title",
+      "post_content",
+      "edited",
+      "useFeedback_posts.date_created",
+      "username",
+      "profile_picture"
+    );
+
   return posts;
 }
 
