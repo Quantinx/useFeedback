@@ -1,0 +1,12 @@
+.navbar-container {
+  background-color: var(--bg-main);
+  color: var(--text-header-main);
+  display: flex;
+  justify-content: space-between;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.category-container {
+  width: fit-content;
+}

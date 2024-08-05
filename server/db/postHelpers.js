@@ -9,15 +9,19 @@ async function getPosts() {
   return posts;
 }
 
-async function createPost(user, stack, content) {
+async function createPost(user, stack, title, content) {
   const res = {};
 
   try {
-    await db("useFeedback_posts").insert({
-      user_ID: user,
-      stack: stack,
-      post_content: content,
-    });
+    const [postID] = await db("useFeedback_posts")
+      .insert({
+        user_ID: user,
+        stack: stack,
+        post_title: title,
+        post_content: content,
+      })
+      .returning("post_ID");
+    res.post = postID;
     res.status = 200;
   } catch (error) {
     res.status = 500;
@@ -33,7 +37,7 @@ async function editPost(user, post = 0, stack, content) {
     const updatePost = await db("useFeedback_posts")
       .where("user_ID", user)
       .where("post_ID", post)
-      .update({ stack: stack, post_content: content });
+      .update({ stack: stack, post_content: content, edited: true });
     if (updatePost === 1) {
       response.status = 200;
       response.message = "Post updated successfully";

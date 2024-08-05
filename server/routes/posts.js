@@ -23,9 +23,10 @@ postRouter.post("/", async (req, res) => {
   console.log("logged in");
   const user = req.user.user_ID;
   const stack = req.body.stack;
+  const title = req.body.title;
   const content = req.body.content;
   console.log(user);
-  const addPost = await createPost(user, stack, content);
+  const addPost = await createPost(user, stack, title, content);
   res.status(addPost.status);
   res.json(addPost);
 });

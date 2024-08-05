@@ -100,6 +100,13 @@ server.post("/api/login", passport.authenticate("local"), (req, res) => {
 });
 
 //
+const { getStacks } = require("./db/stackHelpers");
+server.get("/api/stacks", async (req, res) => {
+  const stacks = await getStacks();
+  res.status(stacks.status).json(stacks.data);
+});
+
+//
 
 const postRouter = require("./routes/posts");
 const commentRouter = require("./routes/comments");

@@ -1,0 +1,15 @@
+:root {
+  --bg-main: #1e1e1e;
+  --bg-secondary: #d4d4d4;
+
+  --text-header-main: #dcdcaa;
+  --text-header-second: #9cdcfe;
+
+  --text-content-main: #569cd6;
+  --text-content-second: #d4d4d4;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
