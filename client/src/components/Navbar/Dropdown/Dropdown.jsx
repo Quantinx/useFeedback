@@ -11,8 +11,8 @@ export default function Dropdown({ categories, visible, loading, error }) {
             })}
           </ul>
         )}
-        {loading && <div>Please wait</div>}
-        {error && <div>Something went wrong :c</div>}
+        {loading && visible && <div>Please wait</div>}
+        {error && visible && <div>Something went wrong :c</div>}
       </div>
     </>
   );
