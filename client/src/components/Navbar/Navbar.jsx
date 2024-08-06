@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import useBackendService from "../../hooks/useBackendService";
 import "./Navbar.css";
 import Dropdown from "./Dropdown/Dropdown";
+import CreatePost from "./CreatePost/CreatePost";
 
 export default function Navbar() {
   const { data, loading, error, getData } = useBackendService();
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
+  const [createPostVisible, setCreatePostVisible] = useState(false);
   function handleMouseOver() {
     setDropdownVisible(true);
   }
@@ -14,6 +15,10 @@ export default function Navbar() {
     setDropdownVisible(false);
   }
 
+  function toggleCreatePost(visible) {
+    console.log(visible);
+    setCreatePostVisible(visible);
+  }
   useEffect(() => {
     getData("/api/stacks");
   }, []);
@@ -35,7 +40,12 @@ export default function Navbar() {
             error={error}
           />
         </div>
-        <div>Create post</div>
+        <div onClick={() => toggleCreatePost(true)}>Create post</div>
+        <CreatePost
+          handleClose={toggleCreatePost}
+          visible={createPostVisible}
+          categories={data}
+        />
       </nav>
     </>
   );
