@@ -21,8 +21,7 @@ export default function CreatePost({ visible, categories, handleClose }) {
     const title = titleRef.current.value;
     const content = editorRef.current.getEditorData();
     const payload = { stack: category, title: title, content: content };
-    // sendData("/api/posts", "POST", payload);
-    console.log(category, title, content);
+    sendData("/api/posts", "POST", payload);
   }
 
   useEffect(() => {
