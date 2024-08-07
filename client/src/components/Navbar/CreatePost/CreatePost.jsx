@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import "./CreatePost.css";
 import useBackendService from "../../../hooks/useBackendService";
 import { useNavigate } from "react-router-dom";
+import TiptapEditor from "../../Editor/Editor";
 
 export default function CreatePost({ visible, categories, handleClose }) {
   const catergoryRef = useRef();
   const titleRef = useRef();
-  const contentRef = useRef();
+  const editorRef = useRef(null);
 
   const redirect = useNavigate();
 
@@ -18,9 +19,9 @@ export default function CreatePost({ visible, categories, handleClose }) {
     e.preventDefault();
     const category = catergoryRef.current.value;
     const title = titleRef.current.value;
-    const content = contentRef.current.value;
+    const content = editorRef.current.getEditorData();
     const payload = { stack: category, title: title, content: content };
-    sendData("/api/posts", "POST", payload);
+    // sendData("/api/posts", "POST", payload);
     console.log(category, title, content);
   }
 
@@ -53,14 +54,14 @@ export default function CreatePost({ visible, categories, handleClose }) {
                   );
                 })}
               </select>
-              <label>
-                Title:
-                <input ref={titleRef}></input>
-              </label>
-              <label>
-                Post:
-                <textarea ref={contentRef}></textarea>
-              </label>
+            </label>
+            <label>
+              Title:
+              <input ref={titleRef}></input>
+            </label>
+            <label>
+              Post:
+              <TiptapEditor editorRef={editorRef} />
             </label>
             <button type="submit" onClick={handleSubmit}>
               Create post
