@@ -3,36 +3,23 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Posts from "./pages/Posts/Posts";
+import SinglePost from "./pages/SinglePost/SinglePost";
 
 function App() {
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    async function getData() {
-      const res = await fetch("/api/posts");
-      const dataJSON = await res.json();
-      console.log(dataJSON);
-      setData(dataJSON);
-    }
-    getData();
-  }, []);
-
   return (
     <>
-      <Header />
-      <Navbar />
-      <div>Hello world</div>
-      {data.data && (
-        <div>
-          {data.data.map((post, i) => {
-            return (
-              <div key={i}>
-                {post.post_content}, created by userID: {post.user_ID}
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <BrowserRouter>
+        <Header />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/categories/:categoryParam" element={<Posts />} />
+          <Route path="/posts/:postParam" element={<SinglePost />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
