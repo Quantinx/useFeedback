@@ -2,16 +2,21 @@ import { useEditor, EditorContent, FloatingMenu } from "@tiptap/react";
 import { useEffect, useImperativeHandle, forwardRef } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
+import Placeholder from "@tiptap/extension-placeholder";
+
 import "./Editor.css";
 const extensions = [StarterKit];
 
-const content = "<p>Hello World!</p>";
+const content = "Write something here";
 
 function TiptapEditor(props, ref) {
   const { editorRef } = props;
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
-    content,
+    extensions: [
+      StarterKit,
+      Underline,
+      Placeholder.configure({ placeholder: content }),
+    ],
   });
 
   useImperativeHandle(
@@ -20,6 +25,14 @@ function TiptapEditor(props, ref) {
       return {
         getEditorData: function () {
           return editor ? editor.getJSON() : null;
+        },
+        getContentLength: () => {
+          return editor ? editor.getText().length : 0;
+        },
+        clearEditor: function () {
+          if (editor) {
+            editor.commands.clearContent();
+          }
         },
       };
     },
@@ -31,6 +44,14 @@ function TiptapEditor(props, ref) {
       editorRef.current = {
         getEditorData: function () {
           return editor ? editor.getJSON() : null;
+        },
+        getContentLength: () => {
+          return editor ? editor.getText().length : 0;
+        },
+        clearEditor: function () {
+          if (editor) {
+            editor.commands.clearContent();
+          }
         },
       };
     }

@@ -20,7 +20,21 @@ export default function CreatePost({ visible, categories, handleClose }) {
     const category = catergoryRef.current.value;
     const title = titleRef.current.value;
     const content = editorRef.current.getEditorData();
+    const contentLength = editorRef.current.getContentLength();
+    if (!category) {
+      setMessage("Please select a category");
+      return;
+    }
+    if (title.length < 6) {
+      setMessage("Please enter a longer title");
+      return;
+    }
+    if (contentLength < 10) {
+      setMessage("post too short");
+      return;
+    }
     const payload = { stack: category, title: title, content: content };
+    console.log("sending payload of:" + payload);
     sendData("/api/posts", "POST", payload);
   }
 

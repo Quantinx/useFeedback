@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import useBackendService from "../../hooks/useBackendService";
+import { UserContextProvider } from "../../context/userContext";
 import "./Navbar.css";
 import Dropdown from "./Dropdown/Dropdown";
 import CreatePost from "./CreatePost/CreatePost";
@@ -8,6 +9,8 @@ export default function Navbar() {
   const { data, loading, error, getData } = useBackendService();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [createPostVisible, setCreatePostVisible] = useState(false);
+  const { userStatus } = useContext(UserContextProvider);
+
   function handleMouseOver() {
     setDropdownVisible(true);
   }
@@ -40,7 +43,11 @@ export default function Navbar() {
             error={error}
           />
         </div>
-        <div onClick={() => toggleCreatePost(true)}>Create post</div>
+        {userStatus.loggedIn ? (
+          <div onClick={() => toggleCreatePost(true)}>Create post</div>
+        ) : (
+          <div>Log in to create posts</div>
+        )}
         <CreatePost
           handleClose={toggleCreatePost}
           visible={createPostVisible}
