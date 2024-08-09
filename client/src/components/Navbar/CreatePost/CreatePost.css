@@ -1,6 +1,9 @@
 .create-post-container {
   position: absolute;
-  border: 1px salmon solid;
+  border: 1px black solid;
+  background-color: var(--bg-secondary);
+  color: var(--text-content-main);
+  padding: 1rem;
   width: 50rem;
   height: 50rem;
   left: 0;
@@ -8,4 +11,53 @@
   top: 0;
   bottom: 0;
   margin: auto;
+}
+
+.create-post-title {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.create-post-close-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.create-post-close {
+  user-select: none;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.create-post-form-container {
+}
+
+.create-post-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.create-post-form-label {
+}
+
+.create-post-input {
+  width: 20vw;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.create-post-editor-container {
+  margin-top: 1rem;
+}
+.create-post-submit-button {
+  width: fit-content;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  background-color: darkblue;
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
 }

@@ -1,10 +1,11 @@
 .editor-container {
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 16px;
+  padding: 1rem;
   min-height: 200px;
   font-family: Arial, sans-serif;
   margin: 0.5rem;
+  background-color: white;
 }
 
 .ProseMirror {
