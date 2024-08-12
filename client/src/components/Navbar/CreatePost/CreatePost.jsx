@@ -35,7 +35,7 @@ export default function CreatePost({ visible, categories, handleClose }) {
     }
     const payload = { stack: category, title: title, content: content };
     console.log("sending payload of:" + payload);
-    // sendData("/api/posts", "POST", payload);
+    sendData("/api/posts", "POST", payload);
   }
 
   useEffect(() => {

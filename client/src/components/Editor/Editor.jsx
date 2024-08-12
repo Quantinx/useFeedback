@@ -5,6 +5,7 @@ import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
 
 import "./Editor.css";
+import ToolbarButton from "./ToolbarButton/ToolbarButton";
 const extensions = [StarterKit];
 
 const content = "Write something here";
@@ -71,21 +72,33 @@ function Toolbar({ editor }) {
 
   return (
     <div className="toolbar">
-      <span
-        type="button"
-        onClick={() => editor.chain().focus().toggleBold().run()}
-      >
-        Bold
-      </span>
-      <span onClick={() => editor.chain().focus().toggleItalic().run()}>
-        Italic
-      </span>
-      <span onClick={() => editor.chain().focus().toggleUnderline().run()}>
-        Underline
-      </span>
-      <span onClick={() => editor.chain().focus().toggleCodeBlock().run()}>
-        Code Block
-      </span>
+      <ToolbarButton
+        icon={"bold"}
+        size={20}
+        active={editor.isActive("bold")}
+        handleClick={() => editor.chain().focus().toggleBold().run()}
+      />
+
+      <ToolbarButton
+        icon={"italic"}
+        size={20}
+        active={editor.isActive("italic")}
+        handleClick={() => editor.chain().focus().toggleItalic().run()}
+      />
+
+      <ToolbarButton
+        icon={"underline"}
+        size={20}
+        active={editor.isActive("underline")}
+        handleClick={() => editor.chain().focus().toggleUnderline().run()}
+      />
+
+      <ToolbarButton
+        icon={"codeblock"}
+        size={20}
+        active={editor.isActive("codeBlock")}
+        handleClick={() => editor.chain().focus().toggleCodeBlock().run()}
+      />
     </div>
   );
 }
