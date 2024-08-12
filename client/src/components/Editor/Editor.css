@@ -6,7 +6,7 @@
   overflow-y: auto;
   font-family: var(--font-body);
   margin: 0.5rem;
-  background-color: white;
+  background-color: var(--bg-secondary);
 }
 
 .ProseMirror {

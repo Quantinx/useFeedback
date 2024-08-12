@@ -1,14 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
-  --bg-main: #1e1e1e;
-  --bg-secondary: #d4d4d4;
+  --bg-main: #1f1f1f;
+  --bg-secondary: #181818;
 
   --text-header-main: #dcdcaa;
   --text-header-second: #9cdcfe;
 
-  --text-content-main: #569cd6;
-  --text-content-second: #d4d4d4;
+  --text-content-main: #008dd7;
+  --text-content-second: #9cdcfe;
+  --text-content-third: #ce9178;
 
   --font-header: "Fira Code";
   --font-body: "Open Sans";
@@ -17,4 +18,8 @@
 * {
   margin: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-secondary);
 }

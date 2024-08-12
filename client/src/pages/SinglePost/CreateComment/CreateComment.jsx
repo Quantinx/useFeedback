@@ -36,8 +36,8 @@ export default function CreateComment({ post, onSuccess }) {
   return (
     <>
       <form className="create-comment-container">
-        Create a comment
-        <TiptapEditor ref={editorRef} />
+        <div className="create-comment-text">Create a comment:</div>
+        <TiptapEditor ref={editorRef} className="create-comment-editor" />
         <button onClick={handleClick} disabled={!buttonActive}>
           Add comment
         </button>
