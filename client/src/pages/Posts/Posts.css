@@ -1,8 +1,8 @@
 .post-page-container {
-  margin: 1rem;
   font-family: var(--font-body);
+  margin: 1rem;
 }
 
-.post-page-title {
-  margin-bottom: 2rem;
+.post-page-heading {
+  text-align: center;
 }

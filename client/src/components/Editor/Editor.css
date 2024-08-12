@@ -2,8 +2,9 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 1rem;
-  min-height: 200px;
-  font-family: Arial, sans-serif;
+  height: 300px;
+  overflow-y: auto;
+  font-family: var(--font-body);
   margin: 0.5rem;
   background-color: white;
 }

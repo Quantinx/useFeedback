@@ -1,0 +1,13 @@
+.post-container {
+  text-decoration: none;
+  display: block;
+  border: 1px lightgrey solid;
+  margin: 1rem;
+
+  margin-left: auto;
+  margin-right: auto;
+  height: 15rem;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 40%;
+}

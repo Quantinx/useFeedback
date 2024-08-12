@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import TiptapEditor from "../../../components/Editor/Editor";
 import useBackendService from "../../../hooks/useBackendService";
+import "./CreateComment.css";
 export default function CreateComment({ post, onSuccess }) {
   const editorRef = useRef(null);
   const { data, loading, status, sendData } = useBackendService();
@@ -34,7 +35,7 @@ export default function CreateComment({ post, onSuccess }) {
 
   return (
     <>
-      <form>
+      <form className="create-comment-container">
         Create a comment
         <TiptapEditor ref={editorRef} />
         <button onClick={handleClick} disabled={!buttonActive}>
