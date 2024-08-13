@@ -23,6 +23,10 @@
       "dest": "/client/static/$1"
     },
     {
+      "src": "/(.*\\.(js|css|png|jpg|gif|svg))",
+      "dest": "/client/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/client/index.html"
     }
