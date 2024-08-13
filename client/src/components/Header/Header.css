@@ -6,4 +6,5 @@
 .header-title {
   color: var(--text-header-main);
   font-family: var(--font-header);
+  font-size: 1.1rem;
 }
