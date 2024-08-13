@@ -1,7 +1,7 @@
 import { useEffect, useRef, useContext, useState } from "react";
 import useBackendService from "../../../hooks/useBackendService";
 import { UserContextProvider } from "../../../context/userContext";
-
+import "./Form.css";
 export default function LoginForm({ closeWindow }) {
   const { data, loading, status, error, sendData } = useBackendService();
   const { checkLogin } = useContext(UserContextProvider);
@@ -36,30 +36,31 @@ export default function LoginForm({ closeWindow }) {
 
   return (
     <>
-      <form>
-        <h2>Login</h2>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            required={true}
-            ref={emailRef}
-          ></input>
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            required={true}
-            ref={passwordRef}
-          ></input>
-        </label>
-        <button type="submit" onClick={handleClick}>
+      <form className="form-container">
+        <h2 className="form-title">Login</h2>
+
+        <input
+          className="form-input"
+          type="email"
+          name="email"
+          placeholder="Email*"
+          required={true}
+          ref={emailRef}
+        ></input>
+
+        <input
+          className="form-input"
+          type="password"
+          name="password"
+          placeholder="Password"
+          required={true}
+          ref={passwordRef}
+        ></input>
+
+        <button className="form-button" type="submit" onClick={handleClick}>
           Login
         </button>
-        <div>{message}</div>
+        <div className="form-message">{message}</div>
       </form>
     </>
   );

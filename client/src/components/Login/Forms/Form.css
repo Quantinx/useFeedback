@@ -1,0 +1,33 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-title {
+  margin-bottom: 2rem;
+}
+
+.form-input {
+  width: 20vw;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.form-button {
+  width: fit-content;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0.5rem;
+  background: none;
+  border: 1px solid var(--text-content-main);
+  color: var(--text-content-main);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.form-message {
+  padding-bottom: 1rem;
+}
