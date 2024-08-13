@@ -1,6 +1,8 @@
 .login-container {
   position: absolute;
-  border: 1px salmon solid;
+  border: 1px black solid;
+  background-color: var(--bg-secondary);
+  color: var(--text-content-main);
   width: 25rem;
   height: 50rem;
   left: 0;

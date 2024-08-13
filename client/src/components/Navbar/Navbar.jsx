@@ -35,16 +35,22 @@ export default function Navbar() {
           aria-haspopup
           className="category-container"
         >
-          Categories
+          <div className="category-label">Categories</div>
           <Dropdown
             categories={data}
             visible={dropdownVisible}
             loading={loading}
             error={error}
+            hideDropdown={handleMouseLeave}
           />
         </div>
         {userStatus.loggedIn ? (
-          <div onClick={() => toggleCreatePost(true)}>Create post</div>
+          <div
+            onClick={() => toggleCreatePost(true)}
+            className="navbar-create-post"
+          >
+            Create post
+          </div>
         ) : (
           <div>Log in to create posts</div>
         )}

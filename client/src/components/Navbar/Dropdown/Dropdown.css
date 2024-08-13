@@ -4,12 +4,12 @@
   left: 0;
   z-index: 100;
   width: 100%;
+  cursor: default;
 }
 
 .dropdown-links {
   list-style: none;
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
+  margin-left: 50rem;
 }
 
 .dropdown-link-container {

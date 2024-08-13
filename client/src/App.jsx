@@ -13,7 +13,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
-        <Navbar />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/categories/:categoryParam" element={<Posts />} />

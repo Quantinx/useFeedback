@@ -1,0 +1,5 @@
+.comment-nouser-text {
+  font-family: (var(--font-body));
+  color: var(--text-content-main);
+  padding-bottom: 1rem;
+}

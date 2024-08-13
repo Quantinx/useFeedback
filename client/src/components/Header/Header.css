@@ -1,6 +1,12 @@
 .header-container {
   background-color: var(--bg-main);
   display: flex;
+  justify-content: space-around;
+  height: 2rem;
+}
+
+.header-link {
+  text-decoration: none;
 }
 
 .header-title {

@@ -3,10 +3,17 @@
   color: var(--text-header-main);
   display: flex;
   justify-content: space-between;
+  gap: 10rem;
   padding-left: 5rem;
   padding-right: 5rem;
 }
 
 .category-container {
   width: fit-content;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+.navbar-create-post {
+  cursor: pointer;
 }

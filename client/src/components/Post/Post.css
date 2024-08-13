@@ -1,7 +1,7 @@
 .post-container {
   text-decoration: none;
   display: block;
-  border: 1px lightgrey solid;
+  border-bottom: 1px lightgrey solid;
   margin: 1rem;
   padding: 1.5rem;
   margin-left: auto;

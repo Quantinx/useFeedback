@@ -18,13 +18,16 @@ export default function LoginForm({ closeWindow }) {
   }
 
   useEffect(() => {
-    console.log(status);
     if (status === 200) {
       checkLogin();
       setMessage("login successful");
       setTimeout(() => {
         closeWindow();
       }, 2000);
+    }
+
+    if (status === 401) {
+      setMessage("Invalid Login");
     }
   }, [loading]);
 
