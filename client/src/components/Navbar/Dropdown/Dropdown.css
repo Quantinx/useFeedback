@@ -1,5 +1,23 @@
 .dropdown-container {
   position: absolute;
   background-color: var(--bg-main);
+  left: 0;
   z-index: 100;
+  width: 100%;
+}
+
+.dropdown-links {
+  list-style: none;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
+.dropdown-link-container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dropdown-link {
+  color: var(--text-content-second);
+  text-decoration: none;
 }

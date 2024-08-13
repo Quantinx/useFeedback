@@ -3,7 +3,7 @@
   display: block;
   border: 1px lightgrey solid;
   margin: 1rem;
-
+  padding: 1.5rem;
   margin-left: auto;
   margin-right: auto;
   height: 15rem;
@@ -14,4 +14,7 @@
 
 .post-title {
   color: var(--text-content-main);
+  text-transform: capitalize;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
 }

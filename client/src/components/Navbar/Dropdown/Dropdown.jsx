@@ -5,11 +5,14 @@ export default function Dropdown({ categories, visible, loading, error }) {
     <>
       <div className="dropdown-container">
         {visible && !loading && !error && (
-          <ul>
+          <ul className="dropdown-links">
             {categories.map((category, i) => {
               return (
-                <li key={i}>
-                  <Link to={"/categories/" + category.stack_name}>
+                <li key={i} className="dropdown-link-container">
+                  <Link
+                    className="dropdown-link"
+                    to={"/categories/" + category.stack_name}
+                  >
                     {category.stack_name}
                   </Link>
                 </li>

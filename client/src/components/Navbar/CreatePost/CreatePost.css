@@ -51,9 +51,12 @@
 .create-post-submit-button {
   width: fit-content;
   padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   margin: 0.5rem;
-  background-color: darkblue;
-  color: white;
+  background: none;
+  border: 1px solid var(--text-content-main);
+  color: var(--text-content-main);
   border-radius: 0.5rem;
   cursor: pointer;
 }

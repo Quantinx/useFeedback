@@ -9,4 +9,5 @@
 .single-post-page-title {
   margin-bottom: 2rem;
   color: var(--text-content-main);
+  text-transform: capitalize;
 }
