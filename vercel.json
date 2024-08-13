@@ -19,12 +19,12 @@
       "dest": "server/index.js"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "/client/static/$1"
+      "src": "/client/static/(.*)",
+      "dest": "/client/dist/static/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/client/index.html"
+      "src": "/client/(.*)",
+      "dest": "/client/dist/index.html"
     }
   ]
 }
