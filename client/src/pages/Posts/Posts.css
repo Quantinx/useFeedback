@@ -1,0 +1,10 @@
+.post-page-container {
+  font-family: var(--font-body);
+  margin: 1rem;
+}
+
+.post-page-heading {
+  text-align: center;
+  color: var(--text-header-main);
+  font-size: 3rem;
+}

@@ -1,0 +1,8 @@
+.create-comment-container {
+  margin-top: 4rem;
+  max-width: 50rem;
+}
+
+.create-comment-text {
+  color: var(--text-content-main);
+}

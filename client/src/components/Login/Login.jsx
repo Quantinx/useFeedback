@@ -12,7 +12,11 @@ export default function Login({ visible, handleClick }) {
       {visible && (
         <>
           <div className="login-container">
-            <div onClick={() => handleClick(false)}>X</div>
+            <div className="login-close-container">
+              <div className="login-close" onClick={() => handleClick(false)}>
+                X
+              </div>
+            </div>
             <div>
               {existingUser ? (
                 <LoginForm closeWindow={() => handleClick(false)} />
@@ -21,9 +25,13 @@ export default function Login({ visible, handleClick }) {
               )}
             </div>
             {existingUser ? (
-              <div onClick={handleToggle}>Don't have an account?</div>
+              <div className="form-switch" onClick={handleToggle}>
+                Don't have an account?
+              </div>
             ) : (
-              <div onClick={handleToggle}>Already have an account?</div>
+              <div className="form-switch" onClick={handleToggle}>
+                Already have an account?
+              </div>
             )}
           </div>
         </>

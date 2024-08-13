@@ -3,6 +3,7 @@ import useBackendService from "../../../hooks/useBackendService";
 import Comment from "../Comment/Comment";
 import CreateComment from "../CreateComment/CreateComment";
 import { UserContextProvider } from "../../../context/userContext";
+import "./Comments.css";
 
 export default function Comments({ post }) {
   const { userStatus } = useContext(UserContextProvider);
@@ -25,7 +26,11 @@ export default function Comments({ post }) {
     <>
       {!loading && !error && (
         <div>
-          <CreateComment post={post} onSuccess={newComment} />
+          {userStatus.loggedIn ? (
+            <CreateComment post={post} onSuccess={newComment} />
+          ) : (
+            <div className="comment-nouser-text">Log in to post a comment</div>
+          )}
           {data.data.map((comment, i) => {
             return <Comment comment={comment} key={i} />;
           })}

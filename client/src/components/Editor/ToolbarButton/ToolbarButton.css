@@ -1,0 +1,8 @@
+.toolbar-icon {
+  margin-right: 1rem;
+  user-select: none;
+  cursor: pointer;
+}
+.toolbar-icon-active {
+  background-color: grey;
+}

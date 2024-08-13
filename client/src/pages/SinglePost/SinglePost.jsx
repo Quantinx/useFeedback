@@ -16,8 +16,8 @@ export default function SinglePost() {
   return (
     <>
       {!loading && !error && (
-        <article>
-          <h2>{data.data[0].post_title}</h2>
+        <article className="single-post-page-container">
+          <h2 className="single-post-page-title">{data.data[0].post_title}</h2>
           <RichTextViewer content={data.data[0].post_content} />
           <Comments post={data.data[0].post_ID} />
         </article>

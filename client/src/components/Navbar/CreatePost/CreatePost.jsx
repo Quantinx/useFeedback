@@ -53,30 +53,54 @@ export default function CreatePost({ visible, categories, handleClose }) {
     <>
       {visible && (
         <div className="create-post-container">
-          <div onClick={() => handleClose(false)}>X</div>
-          <div>Create a post here</div>
-          <form>
-            <label>
-              Category:
-              <select ref={catergoryRef}>
+          <div className="create-post-close-container">
+            <div
+              className="create-post-close"
+              onClick={() => handleClose(false)}
+            >
+              X
+            </div>
+          </div>
+          <h3 className="create-post-title">Create a post here</h3>
+          <form className="create-post-form-container">
+            <div className="create-post-input-container">
+              <select
+                className="create-post-input"
+                ref={catergoryRef}
+                name="category"
+              >
+                <option hidden value={""}>
+                  Category
+                </option>
                 {categories.map((category, i) => {
                   return (
-                    <option key={i} value={category.stack_name}>
+                    <option
+                      className="create-post-select-option"
+                      key={i}
+                      value={category.stack_name}
+                    >
                       {category.stack_name}
                     </option>
                   );
                 })}
               </select>
-            </label>
-            <label>
-              Title:
-              <input ref={titleRef}></input>
-            </label>
-            <label>
-              Post:
+
+              <input
+                className="create-post-input"
+                name="title"
+                placeholder="Title"
+                ref={titleRef}
+              ></input>
+            </div>
+            <div className="create-post-editor-container">
               <TiptapEditor editorRef={editorRef} />
-            </label>
-            <button type="submit" onClick={handleSubmit}>
+            </div>
+
+            <button
+              className="create-post-submit-button"
+              type="submit"
+              onClick={handleSubmit}
+            >
               Create post
             </button>
             {message}

@@ -1,11 +1,32 @@
 .login-container {
   position: absolute;
-  border: 1px salmon solid;
+  border: 1px black solid;
+  background-color: var(--bg-secondary);
+  color: var(--text-content-main);
+  font-family: var(--font-body);
+
   width: 25rem;
-  height: 50rem;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
+  height: 30rem;
+  top: 10rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+}
+
+.login-close-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.login-close {
+  user-select: none;
+  cursor: pointer;
+  width: fit-content;
+  font-family: none;
+}
+
+.form-switch {
+  padding-top: 1rem;
+  cursor: pointer;
 }

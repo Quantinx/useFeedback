@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useBackendService from "../../hooks/useBackendService";
 import PostPreview from "../../components/Post/Post";
+import "./Posts.css";
 export default function Posts() {
   const { categoryParam } = useParams();
   const { data, loading, error, getData } = useBackendService();
@@ -13,15 +14,16 @@ export default function Posts() {
 
   return (
     <>
-      <h2>{categoryParam}</h2>
-      <div>post page here</div>
-      {!loading && !error && (
-        <div>
-          {data.data.map((post, i) => {
-            return <PostPreview post={post} key={i} />;
-          })}
-        </div>
-      )}
+      <article className="post-page-container">
+        <h2 className="post-page-heading">{categoryParam}</h2>
+        {!loading && !error && (
+          <div>
+            {data.data.map((post, i) => {
+              return <PostPreview post={post} key={i} />;
+            })}
+          </div>
+        )}
+      </article>
     </>
   );
 }

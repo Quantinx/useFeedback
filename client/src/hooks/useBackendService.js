@@ -34,10 +34,10 @@ export default function useBackendService() {
         method: method,
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
       const status = res.status;
-      setData(data);
       setStatus(status);
+      const data = await res.json();
+      setData(data);
       setLoading(false);
     } catch (error) {
       setError(error);
