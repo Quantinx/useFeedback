@@ -11,4 +11,12 @@
   margin-bottom: 2rem;
   color: var(--text-content-main);
   text-transform: capitalize;
+  font-size: 2rem;
+}
+
+.single-post-subheading {
+  margin-top: 2rem;
+  font-style: italic;
+  color: var(--text-content-second);
+  font-family: var(--font-body);
 }

@@ -1,0 +1,5 @@
+.account-login-text {
+  color: var(--text-content-second);
+  font-family: var(--font-body);
+  cursor: pointer;
+}

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { UserContextProvider } from "../../context/userContext";
 import Login from "../Login/Login";
-
+import "./Account.css";
 export default function Account() {
   const { userStatus } = useContext(UserContextProvider);
 
@@ -13,7 +13,7 @@ export default function Account() {
 
   return (
     <>
-      <div style={{ color: "white" }}>
+      <div className="account-login-text">
         {userStatus.loggedIn && <div>Welcome {userStatus.data.username}</div>}
         {!userStatus.loggedIn && (
           <div onClick={() => toggleLogin(true)}>Login/Register</div>
