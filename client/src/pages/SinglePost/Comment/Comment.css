@@ -1,0 +1,13 @@
+.comment-title-container {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-content-main);
+  border-bottom: 1px var(--text-content-third) solid;
+  margin-bottom: 2rem;
+}
+
+.comment-content-container {
+  border-bottom: 1px var(--text-content-third) solid;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
