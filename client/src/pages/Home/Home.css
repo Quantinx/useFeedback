@@ -1,7 +1,7 @@
 .home-container {
   margin-top: 3rem;
-  margin-left: 30%;
-  margin-right: 30%;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .home-title {
@@ -13,6 +13,8 @@
 .home-main-text {
   color: var(--text-content-main);
   font-family: var(--font-body);
+  width: 894px;
+
   margin-bottom: 4rem;
 }
 
@@ -25,7 +27,6 @@
 }
 
 .home-cta-text {
-  margin: 2rem;
   padding: 1rem;
   width: fit-content;
   font-family: var(--font-body);
@@ -37,5 +38,8 @@
 
 .home-banner-image {
   margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-bottom: 8rem;
+
+  display: block;
+  width: fit-content;
 }

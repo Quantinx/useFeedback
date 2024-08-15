@@ -15,10 +15,10 @@ export default function Home() {
           Register to begin your journey today!
         </div>
         <img
-          src="/images/banner.jpg"
+          src="/images/banner2.jpg"
           className="home-banner-image"
-          width={711}
-          height={400}
+          height={300}
+          width={894}
         ></img>
         <div className="home-content-container">
           <section>
