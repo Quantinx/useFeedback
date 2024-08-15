@@ -22,3 +22,11 @@
   color: var(--text-content-second);
   text-decoration: none;
 }
+
+.navbar-create-post {
+  font-family: var(--font-body);
+}
+
+.navbar-create-post-nouser {
+  font-family: var(--font-body);
+}
