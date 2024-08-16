@@ -16,4 +16,5 @@
 
 .navbar-create-post {
   cursor: pointer;
+  font-family: var(--font-body);
 }

@@ -9,7 +9,8 @@
 
 .dropdown-links {
   list-style: none;
-  margin-left: 50rem;
+  margin-left: 40%;
+  margin-right: 60%;
 }
 
 .dropdown-link-container {
@@ -20,4 +21,12 @@
 .dropdown-link {
   color: var(--text-content-second);
   text-decoration: none;
+}
+
+.navbar-create-post {
+  font-family: var(--font-body);
+}
+
+.navbar-create-post-nouser {
+  font-family: var(--font-body);
 }

@@ -45,6 +45,19 @@
   pointer-events: none;
 }
 
+.editor-container pre {
+  background-color: #282c34;
+  color: #abb2bf;
+  border-radius: 4px;
+  padding: 10px;
+  overflow-x: auto;
+  margin: 0;
+}
+
+.editor-container pre code {
+  color: inherit;
+}
+
 .toolbar {
   padding: 1rem;
 }

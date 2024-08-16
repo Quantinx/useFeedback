@@ -18,7 +18,9 @@ async function getComments(post, page = 1, perPage) {
       .select(
         "useFeedback_comments.comment_ID",
         "useFeedback_comments.comment_content",
-        "useFeedback_users.username"
+        "useFeedback_users.username",
+        "useFeedback_comments.edited",
+        "useFeedback_comments.date_created"
       )
       .paginate({ perPage: perPage, currentPage: page });
 

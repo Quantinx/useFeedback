@@ -24,6 +24,7 @@ export default function Comments({ post }) {
   }
   return (
     <>
+      <h3 className="comments-header">Comments</h3>
       {!loading && !error && (
         <div>
           {userStatus.loggedIn ? (

@@ -52,7 +52,9 @@ export default function Navbar() {
             Create post
           </div>
         ) : (
-          <div>Log in to create posts</div>
+          <div className="navbar-create-post-nouser">
+            Log in to create posts
+          </div>
         )}
         <CreatePost
           handleClose={toggleCreatePost}

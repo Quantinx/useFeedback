@@ -1,0 +1,45 @@
+.home-container {
+  margin-top: 3rem;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.home-title {
+  color: var(--text-content-second);
+  font-family: var(--font-body);
+  margin-bottom: 2rem;
+}
+
+.home-main-text {
+  color: var(--text-content-main);
+  font-family: var(--font-body);
+  width: 894px;
+
+  margin-bottom: 4rem;
+}
+
+.home-content-container {
+  font-family: var(--font-body);
+  color: var(--text-content-main);
+  margin-top: 3rem;
+  display: flex;
+  gap: 3rem;
+}
+
+.home-cta-text {
+  padding: 1rem;
+  width: fit-content;
+  font-family: var(--font-body);
+  color: var(--text-content-third);
+  border: 1px var(--text-content-third) solid;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.home-banner-image {
+  margin-top: 4rem;
+  margin-bottom: 8rem;
+
+  display: block;
+  width: fit-content;
+}
