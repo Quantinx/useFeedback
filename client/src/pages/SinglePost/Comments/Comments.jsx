@@ -1,21 +1,21 @@
 import { useEffect, useState, useContext } from "react";
-import useBackendService from "../../../hooks/useBackendService";
 import Comment from "../Comment/Comment";
 import CreateComment from "../CreateComment/CreateComment";
 import { UserContextProvider } from "../../../context/userContext";
 import "./Comments.css";
 import useModalStore from "../../../stores/modals";
-
+import { useQuery } from "@tanstack/react-query";
+import getData from "../../../helpers/getData";
 export default function Comments({ post }) {
   const { userStatus } = useContext(UserContextProvider);
-  const { loading, data, error, getData } = useBackendService();
-  const uri = "/api/comments?post=" + post;
+  const commentsURL = "/api/comments?post=" + post;
+  const { data, isLoading, isError } = useQuery({
+    queryKey: [commentsURL],
+    queryFn: () => getData(commentsURL),
+    refetchOnWindowFocus: false,
+  });
   const [optimisticComment, setOptimisticComment] = useState(null);
   const { setLoginVisible } = useModalStore();
-
-  useEffect(() => {
-    getData(uri);
-  }, []);
 
   function newComment(comment) {
     const commentData = {
@@ -31,7 +31,7 @@ export default function Comments({ post }) {
   return (
     <>
       <h3 className="comments-header">Comments</h3>
-      {!loading && !error && (
+      {!isLoading && !isError && (
         <div>
           {userStatus.loggedIn ? (
             <CreateComment post={post} onSuccess={newComment} />

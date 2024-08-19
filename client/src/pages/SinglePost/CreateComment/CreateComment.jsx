@@ -1,12 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import TiptapEditor from "../../../components/Editor/Editor";
-import useBackendService from "../../../hooks/useBackendService";
 import "./CreateComment.css";
+import { useMutation } from "@tanstack/react-query";
+import sendData from "../../../helpers/sendData";
 export default function CreateComment({ post, onSuccess }) {
   const editorRef = useRef(null);
-  const { data, loading, status, sendData } = useBackendService();
   const [message, setMessage] = useState();
   const [buttonActive, setButtonActive] = useState(true);
+  const commentMutator = useMutation({
+    mutationKey: "newcomment",
+    mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
+    onSuccess: (response) => {
+      console.log(response.status);
+      if (response.status === 200) {
+        setMessage("Post sucessfully added");
+        setButtonActive(true);
+        editorRef.current.clearEditor();
+      }
+    },
+  });
   function handleClick(e) {
     e.preventDefault();
 
@@ -21,17 +33,12 @@ export default function CreateComment({ post, onSuccess }) {
     }
     setButtonActive(false);
     onSuccess(payload);
-    sendData("/api/comments", "POST", payload);
+    commentMutator.mutate({
+      url: "/api/comments",
+      method: "POST",
+      payload: payload,
+    });
   }
-
-  useEffect(() => {
-    console.log(status);
-    if (status === 200) {
-      setMessage("Post sucessfully added");
-      setButtonActive(true);
-      editorRef.current.clearEditor();
-    }
-  }, [loading]);
 
   return (
     <>
