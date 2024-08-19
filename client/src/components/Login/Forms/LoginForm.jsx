@@ -3,6 +3,7 @@ import { UserContextProvider } from "../../../context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
 import "./Form.css";
+import queryClient from "../../../query/queryClient";
 export default function LoginForm({ closeWindow }) {
   const { checkLogin } = useContext(UserContextProvider);
   const [message, setMessage] = useState();
@@ -10,10 +11,9 @@ export default function LoginForm({ closeWindow }) {
     mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
     mutationKey: "login",
     onSuccess: (response) => {
-      console.log("success" + response.status);
       if (response.status === 200) {
-        checkLogin();
         setMessage("login successful");
+        queryClient.invalidateQueries("user");
         setTimeout(() => {
           closeWindow();
         }, 2000);
