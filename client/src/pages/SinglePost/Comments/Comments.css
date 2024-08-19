@@ -10,4 +10,6 @@
   font-family: (var(--font-body));
   color: var(--text-content-main);
   padding-bottom: 1rem;
+  cursor: pointer;
+  width: fit-content;
 }

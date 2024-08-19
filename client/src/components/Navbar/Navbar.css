@@ -18,3 +18,7 @@
   cursor: pointer;
   font-family: var(--font-body);
 }
+
+.navbar-create-post-nouser {
+  cursor: pointer;
+}
