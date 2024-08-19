@@ -1,6 +1,12 @@
+import useModalStore from "../../stores/modals";
 import "./Home.css";
 
 export default function Home() {
+  const { setLoginVisible } = useModalStore();
+  function handleClick() {
+    setLoginVisible(true);
+  }
+
   return (
     <>
       <article className="home-container">
@@ -11,7 +17,7 @@ export default function Home() {
           Join our friendly community where developers of all levels connect,
           collaborate, and grow through shared knowledge and support.
         </section>
-        <div role="button" className="home-cta-text">
+        <div role="button" className="home-cta-text" onClick={handleClick}>
           Register to begin your journey today!
         </div>
         <img

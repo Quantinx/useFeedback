@@ -4,18 +4,23 @@ import { UserContextProvider } from "../../context/userContext";
 import "./Navbar.css";
 import Dropdown from "./Dropdown/Dropdown";
 import CreatePost from "./CreatePost/CreatePost";
+import useModalStore from "../../stores/modals";
 
 export default function Navbar() {
   const { data, loading, error, getData } = useBackendService();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [createPostVisible, setCreatePostVisible] = useState(false);
   const { userStatus } = useContext(UserContextProvider);
-
+  const { setLoginVisible } = useModalStore();
   function handleMouseOver() {
     setDropdownVisible(true);
   }
   function handleMouseLeave() {
     setDropdownVisible(false);
+  }
+
+  function handleLoginClick() {
+    setLoginVisible(true);
   }
 
   function toggleCreatePost(visible) {
@@ -52,7 +57,7 @@ export default function Navbar() {
             Create post
           </div>
         ) : (
-          <div className="navbar-create-post-nouser">
+          <div className="navbar-create-post-nouser" onClick={handleLoginClick}>
             Log in to create posts
           </div>
         )}

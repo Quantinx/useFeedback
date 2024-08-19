@@ -1,14 +1,13 @@
 import { useContext, useState } from "react";
 import { UserContextProvider } from "../../context/userContext";
 import Login from "../Login/Login";
+import useModalStore from "../../stores/modals";
 import "./Account.css";
 export default function Account() {
   const { userStatus } = useContext(UserContextProvider);
-
-  const [showLogin, setShowLogin] = useState(false);
+  const { loginVisible, setLoginVisible } = useModalStore();
   function toggleLogin(visible) {
-    setShowLogin(visible);
-    console.log(visible);
+    setLoginVisible(visible);
   }
 
   return (
@@ -19,7 +18,7 @@ export default function Account() {
           <div onClick={() => toggleLogin(true)}>Login/Register</div>
         )}
       </div>
-      <Login handleClick={toggleLogin} visible={showLogin} />
+      <Login handleClick={toggleLogin} visible={loginVisible} />
     </>
   );
 }
