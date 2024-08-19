@@ -1,11 +1,32 @@
 import { useEffect, useRef, useContext, useState } from "react";
-import useBackendService from "../../../hooks/useBackendService";
 import { UserContextProvider } from "../../../context/userContext";
+import { useMutation } from "@tanstack/react-query";
+import sendData from "../../../helpers/sendData";
 import "./Form.css";
 export default function LoginForm({ closeWindow }) {
-  const { data, loading, status, error, sendData } = useBackendService();
   const { checkLogin } = useContext(UserContextProvider);
   const [message, setMessage] = useState();
+  const loginMutation = useMutation({
+    mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
+    mutationKey: "login",
+    onSuccess: (response) => {
+      console.log("success" + response.status);
+      if (response.status === 200) {
+        checkLogin();
+        setMessage("login successful");
+        setTimeout(() => {
+          closeWindow();
+        }, 2000);
+      }
+
+      if (response.status === 401) {
+        setMessage("Invalid Login");
+      }
+    },
+    onError: (response) => {
+      console.log("error: " + response);
+    },
+  });
 
   function handleClick(e) {
     e.preventDefault();
@@ -14,22 +35,12 @@ export default function LoginForm({ closeWindow }) {
       password: passwordRef.current.value,
     };
     console.log(payload);
-    sendData("/api/login", "POST", payload);
+    loginMutation.mutate({
+      url: "/api/login",
+      method: "POST",
+      payload: payload,
+    });
   }
-
-  useEffect(() => {
-    if (status === 200) {
-      checkLogin();
-      setMessage("login successful");
-      setTimeout(() => {
-        closeWindow();
-      }, 2000);
-    }
-
-    if (status === 401) {
-      setMessage("Invalid Login");
-    }
-  }, [loading]);
 
   const emailRef = useRef();
   const passwordRef = useRef();

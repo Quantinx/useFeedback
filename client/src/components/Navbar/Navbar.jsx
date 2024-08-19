@@ -1,17 +1,22 @@
 import { useEffect, useState, useContext } from "react";
-import useBackendService from "../../hooks/useBackendService";
 import { UserContextProvider } from "../../context/userContext";
 import "./Navbar.css";
 import Dropdown from "./Dropdown/Dropdown";
 import CreatePost from "./CreatePost/CreatePost";
 import useModalStore from "../../stores/modals";
+import getData from "../../helpers/getData";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Navbar() {
-  const { data, loading, error, getData } = useBackendService();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [createPostVisible, setCreatePostVisible] = useState(false);
   const { userStatus } = useContext(UserContextProvider);
   const { setLoginVisible } = useModalStore();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getData("/api/stacks"),
+    refetchOnWindowFocus: false,
+  });
   function handleMouseOver() {
     setDropdownVisible(true);
   }
@@ -27,9 +32,6 @@ export default function Navbar() {
     console.log(visible);
     setCreatePostVisible(visible);
   }
-  useEffect(() => {
-    getData("/api/stacks");
-  }, []);
 
   return (
     <>
@@ -44,8 +46,8 @@ export default function Navbar() {
           <Dropdown
             categories={data}
             visible={dropdownVisible}
-            loading={loading}
-            error={error}
+            loading={isLoading}
+            error={isError}
             hideDropdown={handleMouseLeave}
           />
         </div>
