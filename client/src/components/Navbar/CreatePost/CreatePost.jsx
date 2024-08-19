@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import "./CreatePost.css";
-import useBackendService from "../../../hooks/useBackendService";
 import { useNavigate } from "react-router-dom";
 import TiptapEditor from "../../Editor/Editor";
+import { useMutation } from "@tanstack/react-query";
+import sendData from "../../../helpers/sendData";
 
 export default function CreatePost({ visible, categories, handleClose }) {
   const catergoryRef = useRef();
@@ -13,7 +14,25 @@ export default function CreatePost({ visible, categories, handleClose }) {
 
   const [message, setMessage] = useState();
 
-  const { data, loading, error, status, sendData } = useBackendService();
+  const postMutator = useMutation({
+    mutationKey: "post",
+    mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
+    onSuccess: (response) => {
+      if (response.status === 200) {
+        setMessage("Post added sucessfully ");
+        redirect("/posts/" + response.data.post);
+        handleClose(false);
+      }
+      if (response.status === 500) {
+        setMessage("Failed to create post");
+      }
+    },
+    onError: () => {
+      setMessage(
+        "An unknown error has occured, please check your connection or try again later"
+      );
+    },
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,20 +53,8 @@ export default function CreatePost({ visible, categories, handleClose }) {
       return;
     }
     const payload = { stack: category, title: title, content: content };
-    console.log("sending payload of:" + payload);
-    sendData("/api/posts", "POST", payload);
+    postMutator.mutate({ url: "/api/posts", method: "POST", payload: payload });
   }
-
-  useEffect(() => {
-    if (status === 200) {
-      setMessage("Post added sucessfully ");
-      redirect("/posts/" + data.post);
-      handleClose(false);
-    }
-    if (status === 500) {
-      setMessage("Failed to create post");
-    }
-  }, [loading]);
 
   return (
     <>
