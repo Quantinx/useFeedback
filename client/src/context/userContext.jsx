@@ -12,6 +12,8 @@ export const UserProvider = ({ children }) => {
     queryFn: () => getData("/api/users"),
     refetchOnWindowFocus: false,
     placeholderData: { loggedIn: false },
+    retry: false,
+    staleTime: 0,
   });
   function checkLogin() {
     getData("/api/users");
