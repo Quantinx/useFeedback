@@ -23,6 +23,16 @@ async function getUserByUsername(username) {
   return user[0];
 }
 
+async function getUserByUUID(userID) {
+  const user = await db("useFeedback_users")
+    .select("email", "user_ID", "password")
+    .where("user_ID", userID)
+    .then((user) => {
+      return user;
+    });
+  return user[0];
+}
+
 async function createUser(email, username, password) {
   const res = await db("useFeedback_users")
     .insert({
@@ -59,6 +69,7 @@ async function getUserDataForProfile(userID) {
 
 module.exports = {
   getUserByEmail,
+  getUserByUUID,
   getUserByUsername,
   createUser,
   getUserDataForProfile,

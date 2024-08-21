@@ -18,7 +18,7 @@ postRouter.get("/", async (req, res) => {
 });
 
 postRouter.post("/", async (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (!req.isAuthenticated) {
     res.status(401).json({ message: "Unauthorized", status: 401 });
     return;
   }
@@ -47,7 +47,7 @@ postRouter.patch("/", async (req, res) => {
 });
 
 postRouter.delete("/", async (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (!req.isAuthenticated) {
     res.status(401).json({ message: "Unauthorized", status: 401 });
     return;
   }

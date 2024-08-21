@@ -7,47 +7,43 @@ const PORT = process.env.SERVER_PORT;
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
+const cookieParser = require("cookie-parser");
+const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
+const jwt = require("jsonwebtoken");
 
-server.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      sameSite: "lax",
-      secure: false,
-    },
-  })
-);
+server.use(cookieParser());
 
 server.use(passport.initialize());
-server.use(passport.session());
-
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: "email",
-    },
-    async (email, password, done) => {
-      const user = await getUserByEmail(email);
-      if (!user) {
-        return done(null, false, { message: "No user exists" });
-      }
-      const matchedPassword = await bcrypt.compare(password, user.password);
-      if (!matchedPassword) {
-        return done(null, false, { message: "Wrong password" });
-      }
-      return done(null, user);
-    }
-  )
-);
 
 const {
   getUserByEmail,
   getUserByUsername,
+  getUserByUUID,
   createUser,
 } = require("./db/userHelpers");
+
+passport.use(
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+        (req) => req.cookies.token,
+      ]),
+      secretOrKey: process.env.SECRET,
+    },
+    async (jwtPayload, done) => {
+      try {
+        const user = await getUserByUUID(jwtPayload.uuid);
+        if (!user) {
+          return done(null, false, { message: "No user found" });
+        }
+        return done(null, user);
+      } catch (error) {
+        return done(error, false);
+      }
+    }
+  )
+);
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -56,6 +52,23 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
+
+function authenticateJWT(req, res, next) {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+    if (!user) {
+      req.isAuthenticated = false;
+    } else {
+      req.isAuthenticated = true;
+      req.user = user;
+    }
+    next();
+  })(req, res, next);
+}
+
 //
 server.post("/api/register", async (req, res) => {
   const data = req.body;
@@ -95,8 +108,33 @@ server.post("/api/register", async (req, res) => {
   res.json({ message: registerResponse.message });
 });
 
-server.post("/api/login", passport.authenticate("local"), (req, res) => {
-  res.json("Welcome " + req.user.email);
+server.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await getUserByEmail(email);
+    if (!user) {
+      return res.status(401).json({ message: "No user exists" });
+    }
+
+    const matchedPassword = await bcrypt.compare(password, user.password);
+    if (!matchedPassword) {
+      return res.status(401).json({ message: "Wrong password" });
+    }
+    const token = jwt.sign({ uuid: user.user_ID }, process.env.SECRET, {
+      expiresIn: "4h",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+    });
+
+    return res.json({ message: "Logged in successfully", token });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 //
@@ -112,9 +150,9 @@ const postRouter = require("./routes/posts");
 const commentRouter = require("./routes/comments");
 const userRouter = require("./routes/users");
 
-server.use("/api/posts", postRouter);
-server.use("/api/comments", commentRouter);
-server.use("/api/users", userRouter);
+server.use("/api/posts", authenticateJWT, postRouter);
+server.use("/api/comments", authenticateJWT, commentRouter);
+server.use("/api/users", authenticateJWT, userRouter);
 
 server.listen(PORT, () => {
   console.log("Server running on port:" + PORT);
