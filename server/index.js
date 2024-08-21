@@ -33,7 +33,6 @@ passport.use(
     },
     async (jwtPayload, done) => {
       try {
-        console.log(jwtPayload);
         const user = await getUserByUUID(jwtPayload.uuid);
         if (!user) {
           return done(null, false, { message: "No user found" });
