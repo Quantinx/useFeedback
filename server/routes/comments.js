@@ -22,7 +22,7 @@ commentRouter.get("/", async (req, res) => {
 });
 
 commentRouter.post("/", async (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (!req.isAuthenticated) {
     res.status(401).json({ message: "Unauthorized", status: 401 });
     return;
   }
@@ -42,7 +42,7 @@ commentRouter.post("/", async (req, res) => {
 });
 
 commentRouter.patch("/", async (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (!req.isAuthenticated) {
     res.status(401).json({ message: "Unauthorized", status: 401 });
     return;
   }
@@ -54,7 +54,7 @@ commentRouter.patch("/", async (req, res) => {
 });
 
 commentRouter.delete("/", async (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (!req.isAuthenticated) {
     res.status(401).json({ message: "Unauthorized", status: 401 });
     return;
   }
