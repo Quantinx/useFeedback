@@ -19,3 +19,11 @@
 .rich-text-container pre code {
   color: inherit;
 }
+
+.rich-text-container a {
+  color: #bbcccd;
+}
+
+.rich-text-container a:visited {
+  color: #737373;
+}

@@ -58,6 +58,14 @@
   color: inherit;
 }
 
+.editor-container a {
+  color: #bbcccd;
+}
+
+.editor-container a:visited {
+  color: #737373;
+}
+
 .toolbar {
   padding: 1rem;
 }
