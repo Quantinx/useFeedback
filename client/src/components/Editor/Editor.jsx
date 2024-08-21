@@ -3,7 +3,7 @@ import { useEffect, useImperativeHandle, forwardRef } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
-
+import Link from "@tiptap/extension-link";
 import "./Editor.css";
 import ToolbarButton from "./ToolbarButton/ToolbarButton";
 const extensions = [StarterKit];
@@ -17,6 +17,11 @@ function TiptapEditor(props, ref) {
       StarterKit,
       Underline,
       Placeholder.configure({ placeholder: content }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+      }),
     ],
   });
 

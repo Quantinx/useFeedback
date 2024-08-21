@@ -1,16 +1,23 @@
+.dropdown-parent {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
 .dropdown-container {
   position: absolute;
   background-color: var(--bg-main);
-  left: 0;
+  left: -1.5rem;
   z-index: 100;
-  width: 100%;
+  width: fit-content;
   cursor: default;
+  box-sizing: border-box;
 }
 
 .dropdown-links {
   list-style: none;
-  margin-left: 40%;
-  margin-right: 60%;
+  margin-right: 1rem;
 }
 
 .dropdown-link-container {
