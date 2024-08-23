@@ -2,6 +2,7 @@ import "./Profile.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContextProvider } from "../../context/userContext";
 import FieldEdit from "./FieldEdit/FieldEdit";
+import EditProfileModal from "./EditProfileModal/EditProfileModal";
 export default function Profile() {
   const { userStatus } = useContext(UserContextProvider);
   const [toggleEdit, settoggleEdit] = useState(false);
@@ -21,7 +22,7 @@ export default function Profile() {
           <article className="profile-page-container">
             <span
               className="profile-page-edit"
-              onClick={() => settoggleEdit(!toggleEdit)}
+              onClick={() => settoggleEdit(true)}
             >
               Edit Profile
             </span>
@@ -39,6 +40,13 @@ export default function Profile() {
               {userStatus.data.profile_content}
             </div>
           </article>
+          <EditProfileModal
+            user={userStatus.data}
+            visible={toggleEdit}
+            closeModal={() => {
+              settoggleEdit(false);
+            }}
+          />
         </div>
       )}
     </>

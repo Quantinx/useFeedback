@@ -1,0 +1,91 @@
+.edit-profile-container {
+  position: absolute;
+  border: 1px black solid;
+  background-color: var(--bg-secondary);
+  color: var(--text-content-main);
+  font-family: var(--font-body);
+  padding: 1rem;
+  width: 50rem;
+  height: 50rem;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 21rem;
+  z-index: 99;
+  margin: auto;
+}
+
+.edit-profile-close-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.edit-profile-close {
+  width: fit-content;
+  cursor: pointer;
+}
+
+.edit-profile-title {
+  margin-bottom: 2rem;
+}
+
+.edit-profile-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-profile-input-container {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.edit-profile-label {
+  display: block;
+  position: absolute;
+  z-index: 101;
+  bottom: 1.6rem;
+  left: 0.5rem;
+}
+
+.edit-profile-label-textarea {
+  display: block;
+  position: absolute;
+  z-index: 101;
+  bottom: 9.8rem;
+  left: 0.5rem;
+  background-color: var(--bg-secondary);
+}
+.edit-profile-input {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--bg-secondary);
+  color: var(--text-content-second);
+  width: 20rem;
+}
+
+.edit-profile-textarea {
+  resize: none;
+  padding: 0.5rem;
+  width: 20rem;
+  height: 10rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-body);
+  background-color: var(--bg-secondary);
+  color: var(--text-content-second);
+}
+
+.edit-profile-button {
+  width: fit-content;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0.5rem;
+  background: none;
+  border: 1px solid var(--text-content-main);
+  color: var(--text-content-main);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
