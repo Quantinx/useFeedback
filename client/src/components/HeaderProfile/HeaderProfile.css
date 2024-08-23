@@ -1,0 +1,13 @@
+.header-profile-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-profile-user-img {
+  border-radius: 50%;
+}
+
+.header-profile-username {
+  font-family: var(--font-body);
+}

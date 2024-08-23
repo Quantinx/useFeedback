@@ -1,0 +1,9 @@
+.user-profile-card-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-profile-card-pfp-img {
+  border-radius: 50%;
+}

@@ -3,6 +3,7 @@ import { UserContextProvider } from "../../context/userContext";
 import Login from "../Login/Login";
 import useModalStore from "../../stores/modals";
 import "./Account.css";
+import HeaderProfile from "../HeaderProfile/HeaderProfile";
 export default function Account() {
   const { userStatus } = useContext(UserContextProvider);
   const { loginVisible, setLoginVisible } = useModalStore();
@@ -13,7 +14,11 @@ export default function Account() {
   return (
     <>
       <div className="account-login-text">
-        {userStatus.loggedIn && <div>Welcome {userStatus.data.username}</div>}
+        {userStatus.loggedIn && (
+          <div>
+            <HeaderProfile user={userStatus.data} />
+          </div>
+        )}
         {!userStatus.loggedIn && (
           <div onClick={() => toggleLogin(true)}>Login/Register</div>
         )}

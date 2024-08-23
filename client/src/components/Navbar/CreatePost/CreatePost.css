@@ -16,6 +16,7 @@
 
 .create-post-title {
   margin-bottom: 2rem;
+  font-family: var(--font-body);
   text-align: center;
 }
 

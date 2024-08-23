@@ -19,6 +19,7 @@ async function getComments(post, page = 1, perPage) {
         "useFeedback_comments.comment_ID",
         "useFeedback_comments.comment_content",
         "useFeedback_users.username",
+        "useFeedback_users.profile_picture",
         "useFeedback_comments.edited",
         "useFeedback_comments.date_created"
       )

@@ -5,6 +5,7 @@
   border-bottom: 1px var(--text-content-second) solid;
   margin-top: 2rem;
   margin-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .comment-content-container {
