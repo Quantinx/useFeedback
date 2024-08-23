@@ -7,11 +7,15 @@ export default function ExpandedHeaderProfile({ user, visible, hideModal }) {
         <div className="expanded-header-profile-container">
           <div>{user.username}</div>
           <div>{user.full_name}</div>
-          <Link onClick={hideModal} to={"/profile"}>
+          <Link
+            onClick={hideModal}
+            to={"/profile"}
+            className="expanded-header-profile-link"
+          >
             View Profile
           </Link>
-          <Link>View Posts</Link>
-          <Link>Logout</Link>
+          <Link className="expanded-header-profile-link">View Posts</Link>
+          <Link className="expanded-header-profile-link">Logout</Link>
         </div>
       )}
     </>

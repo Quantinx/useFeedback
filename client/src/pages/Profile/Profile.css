@@ -1,25 +1,33 @@
 .profile-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
   color: white;
   margin-top: 3rem;
-  text-align: left;
+  font-family: var(--font-body);
 }
 
-.profile-page-subcontainer {
-  display: flex;
+.profile-page-title {
+  margin-bottom: 2rem;
+  font-family: var(--font-body);
+  text-align: center;
+  text-align: center;
+  color: var(--text-header-main);
+  font-size: 3rem;
+}
+
+.profle-page-text {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .profile-page-profile-content {
-  width: 300px;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
 }
 
 .profile-page-edit {
-  display: block;
-
-  margin-left: 21rem;
+  width: fit-content;
   color: red;
   cursor: pointer;
 }

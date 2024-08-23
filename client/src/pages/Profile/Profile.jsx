@@ -20,16 +20,13 @@ export default function Profile() {
       {userStatus.data && (
         <div className="profile-page-wrapper">
           <article className="profile-page-container">
-            <span
-              className="profile-page-edit"
-              onClick={() => settoggleEdit(true)}
-            >
-              Edit Profile
-            </span>
-
-            <h3>Profile</h3>
-            <div>Username: {userStatus.data.username}</div>
-            <div>Full name: {userStatus.data.full_name}</div>
+            <h2 className="profile-page-title">Profile</h2>
+            <div className="profle-page-text">
+              Username: {userStatus.data.username}
+            </div>
+            <div className="profle-page-text">
+              Full name: {userStatus.data.full_name}
+            </div>
             <img
               src={userStatus.data.profile_picture}
               width={300}
@@ -39,6 +36,12 @@ export default function Profile() {
             <div className="profile-page-profile-content">
               {userStatus.data.profile_content}
             </div>
+            <span
+              className="profile-page-edit"
+              onClick={() => settoggleEdit(true)}
+            >
+              Edit Profile
+            </span>
           </article>
           <EditProfileModal
             user={userStatus.data}
