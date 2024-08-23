@@ -8,6 +8,10 @@ userRouter.get("/", async (req, res) => {
     return;
   }
 
+  userRouter.get("/posts/:username", async (req, res) => {
+    const { username } = req.params;
+  });
+
   const user = req.user.user_ID;
   const userData = await getUserDataForProfile(user);
   res.status(userData.status).json({ loggedIn: true, data: userData.data });

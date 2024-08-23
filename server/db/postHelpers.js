@@ -1,9 +1,11 @@
 const config = require("../knexfile");
 const knex = require("knex");
 const db = knex(config);
-
-async function getPosts(category, post) {
-  const posts = await db("useFeedback_posts").where("stack", category);
+const { attachPaginate } = require("knex-paginate");
+async function getPosts(category, page = 1, perPage = 10) {
+  const posts = await db("useFeedback_posts")
+    .where("stack", category)
+    .paginate({ perPage: perPage, currentPage: page });
 
   return posts;
 }
@@ -29,6 +31,10 @@ async function getPostbyID(postID) {
     )
     .where("post_ID", postID);
   return post;
+}
+
+async function getPostByUserName(username) {
+  //tba
 }
 
 async function createPost(user, stack, title, content) {

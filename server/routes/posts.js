@@ -11,13 +11,12 @@ const {
 
 postRouter.get("/", async (req, res) => {
   const category = req.query.category;
+  const page = req.query.page;
   if (!category) {
     return res.status(400).json({ message: "invalid parameters" });
   }
-  const posts = await getPosts(category);
-  res.json({
-    data: posts,
-  });
+  const posts = await getPosts(category, page);
+  res.json(posts);
 });
 
 postRouter.get("/:id", async (req, res) => {
