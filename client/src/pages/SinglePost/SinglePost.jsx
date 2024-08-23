@@ -7,7 +7,7 @@ import getData from "../../helpers/getData";
 
 export default function SinglePost() {
   const { postParam } = useParams();
-  const postURL = "/api/posts?post=" + postParam;
+  const postURL = "/api/posts/" + postParam;
   const { data, isLoading, isError } = useQuery({
     queryKey: [postURL],
     queryFn: () => getData(postURL),

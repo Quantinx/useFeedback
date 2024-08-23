@@ -3,17 +3,13 @@ const knex = require("knex");
 const db = knex(config);
 
 async function getPosts(category, post) {
-  const query = db("useFeedback_posts");
+  const posts = await db("useFeedback_posts").where("stack", category);
 
-  if (category && category !== "*") {
-    query.where("stack", category);
-  }
+  return posts;
+}
 
-  if (post && post !== "*") {
-    query.where("post_ID", post);
-  }
-
-  const posts = await query
+async function getPostbyID(postID) {
+  const post = await db("useFeedback_posts")
     .join(
       "useFeedback_users",
       "useFeedback_posts.user_ID",
@@ -30,9 +26,9 @@ async function getPosts(category, post) {
       "useFeedback_posts.date_created",
       "username",
       "profile_picture"
-    );
-
-  return posts;
+    )
+    .where("post_ID", postID);
+  return post;
 }
 
 async function createPost(user, stack, title, content) {
@@ -101,4 +97,4 @@ async function deletePost(user, post = 0) {
   return response;
 }
 
-module.exports = { getPosts, createPost, editPost, deletePost };
+module.exports = { getPosts, createPost, editPost, deletePost, getPostbyID };
