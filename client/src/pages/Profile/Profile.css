@@ -1,0 +1,24 @@
+.profile-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-top: 3rem;
+}
+
+.profile-page-subcontainer {
+  display: flex;
+}
+
+.profile-page-profile-content {
+  width: 300px;
+}
+
+.profile-page-edit {
+  display: block;
+
+  margin-left: 21rem;
+  color: red;
+  cursor: pointer;
+}

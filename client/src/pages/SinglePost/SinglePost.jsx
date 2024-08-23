@@ -1,6 +1,5 @@
 import "./SinglePost.css";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 import Comments from "./Comments/Comments";
 import RichTextViewer from "../../components/RichTextViewer/RichTextViewer";
 import { useQuery } from "@tanstack/react-query";

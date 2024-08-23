@@ -1,0 +1,21 @@
+.profile-field-edit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-field-edit-textarea {
+  resize: none;
+  width: 300px;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-field-edit-input {
+  width: 300px;
+}
+
+.profile-field-edit-button {
+  width: fit-content;
+}

@@ -7,6 +7,7 @@ import SinglePost from "./pages/SinglePost/SinglePost";
 import queryClient from "./query/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { UserProvider } from "./context/userContext.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/categories/:categoryParam" element={<Posts />} />
               <Route path="/posts/:postParam" element={<SinglePost />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </BrowserRouter>
         </UserProvider>
