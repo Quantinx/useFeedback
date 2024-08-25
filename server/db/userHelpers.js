@@ -1,4 +1,3 @@
-const { response } = require("express");
 const config = require("../knexfile");
 const knex = require("knex");
 const db = knex(config);
@@ -67,10 +66,33 @@ async function getUserDataForProfile(userID) {
   return response;
 }
 
+async function updateUser(userID, payload) {
+  const response = {};
+
+  try {
+    const updateData = await db("useFeedback_users")
+      .where("user_ID", userID)
+      .update(payload);
+    if (updateData === 1) {
+      response.data = "Profile updated successfully";
+      response.status = 200;
+    } else {
+      response.data = "Unable to find user profile";
+      response.status = 404;
+    }
+  } catch (error) {
+    console.log(error);
+    response.data = "an error has occured";
+    response.status = 500;
+  }
+  return response;
+}
+
 module.exports = {
   getUserByEmail,
   getUserByUUID,
   getUserByUsername,
   createUser,
   getUserDataForProfile,
+  updateUser,
 };
