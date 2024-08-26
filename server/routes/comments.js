@@ -6,6 +6,7 @@ const {
   addComment,
   editComment,
   deleteComment,
+  rateComment,
 } = require("../db/commentHelpers");
 
 commentRouter.get("/", async (req, res) => {
@@ -62,6 +63,19 @@ commentRouter.delete("/", async (req, res) => {
   const comment = req.body.comment;
   const reponse = await deleteComment(user, comment);
   res.status(reponse.status).json(reponse.message);
+});
+
+commentRouter.post("/rating/", async (req, res) => {
+  if (!req.isAuthenticated) {
+    res.status(401).json({ message: "Unauthorized", status: 401 });
+    return;
+  }
+  const user = req.user.user_ID;
+  const rating = req.body.rating;
+  const comment = req.body.comment;
+
+  const response = await rateComment(user, comment, rating);
+  res.status(response.status).json(response.message);
 });
 
 module.exports = commentRouter;

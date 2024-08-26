@@ -5,6 +5,7 @@ const { attachPaginate } = require("knex-paginate");
 attachPaginate();
 
 async function getComments(post, page = 1, perPage) {
+  const currentUserId = "8bd24ec0-5316-11ef-802f-0050569288db";
   const response = {};
   try {
     const comments = await db("useFeedback_comments")
@@ -14,6 +15,19 @@ async function getComments(post, page = 1, perPage) {
         "=",
         "useFeedback_users.user_ID"
       )
+      .leftJoin(
+        "useFeedback_ratings",
+        "useFeedback_comments.comment_ID",
+        "=",
+        "useFeedback_ratings.comment_ID"
+      )
+      .leftJoin("useFeedback_ratings as user_vote", function () {
+        this.on(
+          "useFeedback_comments.comment_ID",
+          "=",
+          "user_vote.comment_ID"
+        ).andOn("user_vote.user_ID", "=", db.raw("?", [currentUserId])); // Use db.raw with parameterized value
+      })
       .where("useFeedback_comments.post_ID", post)
       .select(
         "useFeedback_comments.comment_ID",
@@ -21,8 +35,20 @@ async function getComments(post, page = 1, perPage) {
         "useFeedback_users.username",
         "useFeedback_users.profile_picture",
         "useFeedback_comments.edited",
-        "useFeedback_comments.date_created"
+        "useFeedback_comments.date_created",
+        db.ref("user_vote.rating").as("user_rating") // Referencing the user's rating
       )
+      .sum({ total_rating: "useFeedback_ratings.rating" }) // Summing up the ratings
+      .groupBy(
+        "useFeedback_comments.comment_ID",
+        "useFeedback_comments.comment_content",
+        "useFeedback_users.username",
+        "useFeedback_users.profile_picture",
+        "useFeedback_comments.edited",
+        "useFeedback_comments.date_created",
+        "user_vote.rating" // Grouping by user_rating
+      )
+      .orderBy("total_rating", "desc") // Sorting by total rating
       .paginate({ perPage: perPage, currentPage: page });
 
     response.status = 200;
@@ -99,6 +125,7 @@ async function deleteComment(user, comment = 0) {
 
 async function rateComment(user, comment, rating) {
   const response = {};
+
   if (rating === 0) {
     try {
       await db("useFeedback_ratings")
@@ -123,7 +150,7 @@ async function rateComment(user, comment, rating) {
         comment_ID: comment,
         rating: rating,
       })
-      .onConflict()
+      .onConflict(["user_ID", "comment_ID"])
       .merge();
     response.message = "rating added successfully";
     response.status = 200;
