@@ -1,5 +1,6 @@
 const express = require("express");
 const commentRouter = express.Router();
+const Joi = require("joi");
 
 const {
   getComments,
@@ -71,9 +72,29 @@ commentRouter.post("/rating/", async (req, res) => {
     res.status(401).json({ message: "Unauthorized", status: 401 });
     return;
   }
-  const user = req.user.user_ID;
-  const rating = req.body.rating;
-  const comment = req.body.comment;
+  const schema = Joi.object({
+    rating: Joi.number().valid(-1, 0, 1).required().messages({
+      "any.only": "Rating must be one of -1, 0, or 1",
+      "any.required": "Rating is required",
+    }),
+    comment: Joi.number().required(),
+    user: Joi.string(),
+  });
+
+  const data = {
+    user: req.user.user_ID,
+    rating: req.body.rating,
+    comment: req.body.comment,
+  };
+
+  const { error, value } = schema.validate(data);
+
+  if (error) {
+    res.status(400).json(error.details);
+    return;
+  }
+
+  const { user, rating, comment } = value;
 
   const response = await rateComment(user, comment, rating);
   res.status(response.status).json(response.message);
