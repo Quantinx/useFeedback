@@ -4,8 +4,7 @@ const db = knex(config);
 const { attachPaginate } = require("knex-paginate");
 attachPaginate();
 
-async function getComments(post, page = 1, perPage) {
-  const currentUserId = "8bd24ec0-5316-11ef-802f-0050569288db";
+async function getComments(post, page = 1, perPage, user = null) {
   const response = {};
   try {
     const comments = await db("useFeedback_comments")
@@ -26,7 +25,7 @@ async function getComments(post, page = 1, perPage) {
           "useFeedback_comments.comment_ID",
           "=",
           "user_vote.comment_ID"
-        ).andOn("user_vote.user_ID", "=", db.raw("?", [currentUserId])); // Use db.raw with parameterized value
+        ).andOn("user_vote.user_ID", "=", db.raw("?", [user]));
       })
       .where("useFeedback_comments.post_ID", post)
       .select(
@@ -36,9 +35,9 @@ async function getComments(post, page = 1, perPage) {
         "useFeedback_users.profile_picture",
         "useFeedback_comments.edited",
         "useFeedback_comments.date_created",
-        db.ref("user_vote.rating").as("user_rating") // Referencing the user's rating
+        db.raw("coalesce(user_vote.rating, 0) as user_rating"),
+        db.raw("coalesce(sum(useFeedback_ratings.rating), 0) as total_rating")
       )
-      .sum({ total_rating: "useFeedback_ratings.rating" }) // Summing up the ratings
       .groupBy(
         "useFeedback_comments.comment_ID",
         "useFeedback_comments.comment_content",
@@ -46,9 +45,9 @@ async function getComments(post, page = 1, perPage) {
         "useFeedback_users.profile_picture",
         "useFeedback_comments.edited",
         "useFeedback_comments.date_created",
-        "user_vote.rating" // Grouping by user_rating
+        "user_vote.rating"
       )
-      .orderBy("total_rating", "desc") // Sorting by total rating
+      .orderBy("total_rating", "desc")
       .paginate({ perPage: perPage, currentPage: page });
 
     response.status = 200;

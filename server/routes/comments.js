@@ -12,13 +12,14 @@ const {
 commentRouter.get("/", async (req, res) => {
   const post = req.query.post;
   const page = req.query.page || 1;
+  const user = req.user?.user_ID;
   if (!post) {
     res.status(500).json({ error: "requires post parameter" });
     return;
   }
 
   const commentsPerPage = 20;
-  const comments = await getComments(post, page, commentsPerPage);
+  const comments = await getComments(post, page, commentsPerPage, user);
   res.status(comments.status).json(comments.data);
 });
 
