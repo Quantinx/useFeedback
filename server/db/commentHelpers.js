@@ -96,4 +96,50 @@ async function deleteComment(user, comment = 0) {
   }
   return response;
 }
-module.exports = { getComments, addComment, editComment, deleteComment };
+
+async function rateComment(user, comment, rating) {
+  const response = {};
+  if (rating === 0) {
+    try {
+      await db("useFeedback_ratings")
+        .where({
+          user_ID: user,
+          comment_ID: comment,
+        })
+        .del();
+      response.message = "rating successfully removed";
+      response.status = 200;
+    } catch (error) {
+      console.log(error);
+      response.message = "An error has occured";
+      response.status = 500;
+    }
+  }
+
+  try {
+    await db("useFeedback_ratings")
+      .insert({
+        user_ID: user,
+        comment_ID: comment,
+        rating: rating,
+      })
+      .onConflict()
+      .merge();
+    response.message = "rating added successfully";
+    response.status = 200;
+  } catch (error) {
+    console.log(error);
+    response.message = "an error has occured";
+    response.status = 500;
+  }
+
+  return response;
+}
+
+module.exports = {
+  getComments,
+  addComment,
+  editComment,
+  deleteComment,
+  rateComment,
+};
