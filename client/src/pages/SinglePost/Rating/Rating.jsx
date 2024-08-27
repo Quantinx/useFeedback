@@ -81,6 +81,7 @@ export default function Rating({ currentRating, userRating, commment }) {
         {currentUserRating === 1 ? (
           <img
             src="/icons/thumbs-up-solid.svg"
+            className="rating-icon"
             width={size}
             height={size}
             onClick={() => {
@@ -90,6 +91,7 @@ export default function Rating({ currentRating, userRating, commment }) {
         ) : (
           <img
             src="/icons/thumbs-up-regular.svg"
+            className="rating-icon"
             width={size}
             height={size}
             onClick={() => handleClick(1, "up")}
@@ -99,6 +101,7 @@ export default function Rating({ currentRating, userRating, commment }) {
         {currentUserRating === -1 ? (
           <img
             src="/icons/thumbs-down-solid.svg"
+            className="rating-icon"
             width={size}
             height={size}
             onClick={() => {
@@ -108,6 +111,7 @@ export default function Rating({ currentRating, userRating, commment }) {
         ) : (
           <img
             src="/icons/thumbs-down-regular.svg"
+            className="rating-icon"
             width={size}
             height={size}
             onClick={() => handleClick(-1, "down")}
