@@ -20,10 +20,10 @@ export default function Rating({ currentRating, userRating, commment }) {
     if (!buttonEnabled) {
       return;
     }
-    setButtonEnabled(false);
+    // setButtonEnabled(false);
 
-    setCurrentUserRating(rating);
     const newRating = calculateOptimisticRating(rating, type);
+    setCurrentUserRating(rating);
     setCommentRating(newRating);
 
     const payload = { comment: commment, rating: rating };
@@ -40,25 +40,32 @@ export default function Rating({ currentRating, userRating, commment }) {
   }
 
   function calculateOptimisticRating(change, type) {
-    if (change === userRating) {
-      return userRating;
+    console.log(change, type);
+
+    if (change === 1 && currentUserRating === -1) {
+      return Number(commentRating) + 2;
+    }
+
+    if (change === 1 && type === "up") {
+      return Number(commentRating) + 1;
+    }
+
+    if (change === 0 && type === "up") {
+      return Number(commentRating) - 1;
+    }
+
+    if (change === -1 && currentUserRating === 1) {
+      console.log("setting 1 to -1");
+      return Number(commentRating) - 2;
+    }
+
+    if (change === -1) {
+      return Number(commentRating) - 1;
     }
 
     if (change === 0 && type === "down") {
-      return Number(userRating - 1);
+      return Number(commentRating) + 1;
     }
-
-    if (change === -1 && type === "down" && userRating === 0) {
-      return Number(userRating) - 1;
-    }
-
-    if (change === -1 && type === "down") {
-      return Number(userRating) - 2;
-    }
-
-    return change === 0
-      ? Number(currentUserRating) - 1
-      : Number(currentUserRating) + change;
   }
 
   return (
