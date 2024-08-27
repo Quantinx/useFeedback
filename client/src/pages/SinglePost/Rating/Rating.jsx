@@ -1,9 +1,12 @@
 import "./Rating.css";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContextProvider } from "../../../context/userContext";
 
 export default function Rating({ currentRating, userRating, commment }) {
+  const { userStatus } = useContext(UserContextProvider);
+
   const [currentUserRating, setCurrentUserRating] = useState(userRating);
   const [commentRating, setCommentRating] = useState(currentRating);
   const [buttonEnabled, setButtonEnabled] = useState(true);
@@ -17,10 +20,14 @@ export default function Rating({ currentRating, userRating, commment }) {
   });
 
   function handleClick(rating, type) {
+    if (!userStatus.loggedIn) {
+      return;
+    }
+
     if (!buttonEnabled) {
       return;
     }
-    // setButtonEnabled(false);
+    setButtonEnabled(false);
 
     const newRating = calculateOptimisticRating(rating, type);
     setCurrentUserRating(rating);
