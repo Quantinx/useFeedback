@@ -4,7 +4,7 @@ const db = knex(config);
 const { attachPaginate } = require("knex-paginate");
 attachPaginate();
 
-async function getComments(post, page = 1, perPage) {
+async function getComments(post, page = 1, perPage, user = null) {
   const response = {};
   try {
     const comments = await db("useFeedback_comments")
@@ -14,6 +14,19 @@ async function getComments(post, page = 1, perPage) {
         "=",
         "useFeedback_users.user_ID"
       )
+      .leftJoin(
+        "useFeedback_ratings",
+        "useFeedback_comments.comment_ID",
+        "=",
+        "useFeedback_ratings.comment_ID"
+      )
+      .leftJoin("useFeedback_ratings as user_vote", function () {
+        this.on(
+          "useFeedback_comments.comment_ID",
+          "=",
+          "user_vote.comment_ID"
+        ).andOn("user_vote.user_ID", "=", db.raw("?", [user]));
+      })
       .where("useFeedback_comments.post_ID", post)
       .select(
         "useFeedback_comments.comment_ID",
@@ -21,8 +34,20 @@ async function getComments(post, page = 1, perPage) {
         "useFeedback_users.username",
         "useFeedback_users.profile_picture",
         "useFeedback_comments.edited",
-        "useFeedback_comments.date_created"
+        "useFeedback_comments.date_created",
+        db.raw("coalesce(user_vote.rating, 0) as user_rating"),
+        db.raw("coalesce(sum(useFeedback_ratings.rating), 0) as total_rating")
       )
+      .groupBy(
+        "useFeedback_comments.comment_ID",
+        "useFeedback_comments.comment_content",
+        "useFeedback_users.username",
+        "useFeedback_users.profile_picture",
+        "useFeedback_comments.edited",
+        "useFeedback_comments.date_created",
+        "user_vote.rating"
+      )
+      .orderBy("total_rating", "desc")
       .paginate({ perPage: perPage, currentPage: page });
 
     response.status = 200;
@@ -96,4 +121,51 @@ async function deleteComment(user, comment = 0) {
   }
   return response;
 }
-module.exports = { getComments, addComment, editComment, deleteComment };
+
+async function rateComment(user, comment, rating) {
+  const response = {};
+
+  if (rating === 0) {
+    try {
+      await db("useFeedback_ratings")
+        .where({
+          user_ID: user,
+          comment_ID: comment,
+        })
+        .del();
+      response.message = "rating successfully removed";
+      response.status = 200;
+    } catch (error) {
+      console.log(error);
+      response.message = "An error has occured";
+      response.status = 500;
+    }
+  }
+
+  try {
+    await db("useFeedback_ratings")
+      .insert({
+        user_ID: user,
+        comment_ID: comment,
+        rating: rating,
+      })
+      .onConflict(["user_ID", "comment_ID"])
+      .merge();
+    response.message = "rating added successfully";
+    response.status = 200;
+  } catch (error) {
+    console.log(error);
+    response.message = "an error has occured";
+    response.status = 500;
+  }
+
+  return response;
+}
+
+module.exports = {
+  getComments,
+  addComment,
+  editComment,
+  deleteComment,
+  rateComment,
+};

@@ -6,15 +6,27 @@ const {
   createPost,
   editPost,
   deletePost,
+  getPostbyID,
 } = require("../db/postHelpers");
 
 postRouter.get("/", async (req, res) => {
   const category = req.query.category;
-  const post = req.query.post;
-  const posts = await getPosts(category, post);
-  res.json({
-    data: posts,
-  });
+  const page = req.query.page;
+  const username = req.query.username;
+  if (!category && !username) {
+    return res.status(400).json({ message: "missing parameters" });
+  }
+  const posts = await getPosts(category, username, page);
+  res.json(posts);
+});
+
+postRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: "missing ID" });
+  }
+  const post = await getPostbyID(id);
+  res.json({ data: post });
 });
 
 postRouter.post("/", async (req, res) => {

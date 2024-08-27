@@ -1,16 +1,17 @@
 const config = require("../knexfile");
 const knex = require("knex");
 const db = knex(config);
+const { attachPaginate } = require("knex-paginate");
 
-async function getPosts(category, post) {
+async function getPosts(category, username, page = 1, perPage = 5) {
   const query = db("useFeedback_posts");
 
   if (category && category !== "*") {
     query.where("stack", category);
   }
 
-  if (post && post !== "*") {
-    query.where("post_ID", post);
+  if (username && username !== "*") {
+    query.where("username", username);
   }
 
   const posts = await query
@@ -30,9 +31,33 @@ async function getPosts(category, post) {
       "useFeedback_posts.date_created",
       "username",
       "profile_picture"
-    );
+    )
+    .paginate({ perPage: perPage, currentPage: page });
 
   return posts;
+}
+
+async function getPostbyID(postID) {
+  const post = await db("useFeedback_posts")
+    .join(
+      "useFeedback_users",
+      "useFeedback_posts.user_ID",
+      "=",
+      "useFeedback_users.user_ID"
+    )
+    .select(
+      "post_ID",
+      "useFeedback_posts.user_ID",
+      "stack",
+      "post_title",
+      "post_content",
+      "edited",
+      "useFeedback_posts.date_created",
+      "username",
+      "profile_picture"
+    )
+    .where("post_ID", postID);
+  return post;
 }
 
 async function createPost(user, stack, title, content) {
@@ -101,4 +126,4 @@ async function deletePost(user, post = 0) {
   return response;
 }
 
-module.exports = { getPosts, createPost, editPost, deletePost };
+module.exports = { getPosts, createPost, editPost, deletePost, getPostbyID };
