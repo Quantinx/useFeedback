@@ -8,3 +8,8 @@
 .rating-icon {
   cursor: pointer;
 }
+
+.rating-text {
+  text-align: center;
+  width: 2rem;
+}

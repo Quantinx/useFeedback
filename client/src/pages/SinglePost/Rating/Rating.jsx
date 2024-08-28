@@ -97,7 +97,7 @@ export default function Rating({ currentRating, userRating, commment }) {
             onClick={() => handleClick(1, "up")}
           />
         )}
-        <div>{commentRating}</div>
+        <div className="rating-text">{commentRating}</div>
         {currentUserRating === -1 ? (
           <img
             src="/icons/thumbs-down-solid.svg"
