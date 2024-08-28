@@ -20,7 +20,12 @@ export default function Account() {
           </div>
         )}
         {!userStatus.loggedIn && (
-          <div onClick={() => toggleLogin(true)}>Login/Register</div>
+          <div
+            className="account-login-nouser"
+            onClick={() => toggleLogin(true)}
+          >
+            Login/Register
+          </div>
         )}
       </div>
       <Login handleClick={toggleLogin} visible={loginVisible} />

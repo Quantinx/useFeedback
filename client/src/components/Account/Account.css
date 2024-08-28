@@ -3,3 +3,15 @@
   font-family: var(--font-body);
   cursor: pointer;
 }
+
+.account-login-nouser {
+  color: var(--text-content-second);
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .account-login-nouser {
+    margin-right: 0.5rem;
+  }
+}

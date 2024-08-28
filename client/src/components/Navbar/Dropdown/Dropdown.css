@@ -12,7 +12,7 @@
   z-index: 100;
   width: fit-content;
   cursor: default;
-  box-sizing: border-box;
+  box-sizing: content-box;
 }
 
 .dropdown-links {
@@ -36,4 +36,10 @@
 
 .navbar-create-post-nouser {
   font-family: var(--font-body);
+}
+
+@media (max-width: 500px) {
+  .dropdown-container {
+    top: 1.3rem;
+  }
 }
