@@ -18,3 +18,11 @@
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
 }
+
+@media (max-width: 1200px) {
+  .post-container {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+  }
+}
