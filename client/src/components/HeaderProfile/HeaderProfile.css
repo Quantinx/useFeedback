@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .header-profile-user-img {
@@ -10,4 +11,14 @@
 
 .header-profile-username {
   font-family: var(--font-body);
+}
+
+@media (max-width: 800px) {
+  .header-profile-username {
+    display: none;
+  }
+
+  .header-title-long {
+    display: none;
+  }
 }

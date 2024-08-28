@@ -15,3 +15,13 @@
   font-family: var(--font-header);
   font-size: 1.1rem;
 }
+
+.header-title-short {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .header-title-short {
+    display: block;
+  }
+}
