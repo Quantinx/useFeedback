@@ -3,7 +3,6 @@ import getData from "../../helpers/getData";
 import PostPreview from "../../components/Post/Post";
 import "./Posts.css";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 export default function Posts() {
   const { categoryParam } = useParams();
   const queryURL = "/api/posts?category=" + categoryParam;

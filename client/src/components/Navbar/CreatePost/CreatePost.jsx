@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./CreatePost.css";
 import { useNavigate } from "react-router-dom";
 import TiptapEditor from "../../Editor/Editor";

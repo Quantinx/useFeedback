@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { UserContextProvider } from "../../context/userContext";
 import "./Navbar.css";
 import Dropdown from "./Dropdown/Dropdown";

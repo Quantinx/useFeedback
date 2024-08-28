@@ -1,5 +1,5 @@
 import "./Profile.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContextProvider } from "../../context/userContext";
 import FieldEdit from "./FieldEdit/FieldEdit";
 import EditProfileModal from "./EditProfileModal/EditProfileModal";
@@ -8,12 +8,6 @@ export default function Profile() {
   const [toggleEdit, settoggleEdit] = useState(false);
 
   const payload = {};
-
-  function handleEditContent(text, fieldType) {
-    payload[fieldType] = text;
-
-    console.log(payload);
-  }
 
   return (
     <>

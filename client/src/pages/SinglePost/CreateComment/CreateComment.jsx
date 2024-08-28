@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import TiptapEditor from "../../../components/Editor/Editor";
 import "./CreateComment.css";
 import { useMutation } from "@tanstack/react-query";
