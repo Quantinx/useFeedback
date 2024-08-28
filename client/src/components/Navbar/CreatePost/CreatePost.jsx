@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./CreatePost.css";
 import { useNavigate } from "react-router-dom";
 import TiptapEditor from "../../Editor/Editor";
@@ -22,6 +22,7 @@ export default function CreatePost({ visible, categories, handleClose }) {
         setMessage("Post added sucessfully ");
         redirect("/posts/" + response.data.post);
         handleClose(false);
+        setMessage(null);
       }
       if (response.status === 500) {
         setMessage("Failed to create post");
@@ -63,7 +64,10 @@ export default function CreatePost({ visible, categories, handleClose }) {
           <div className="create-post-close-container">
             <div
               className="create-post-close"
-              onClick={() => handleClose(false)}
+              onClick={() => {
+                setMessage(null);
+                handleClose(false);
+              }}
             >
               X
             </div>

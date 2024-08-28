@@ -7,7 +7,10 @@ export default function Header() {
     <>
       <header className="header-container">
         <Link to={"/"} className="header-link">
-          <h1 className="header-title">useFeedback{"(code, mentors)"}</h1>
+          <h1 className="header-title header-title-long">
+            useFeedback{"(code, mentors)"}
+          </h1>
+          <h1 className="header-title header-title-short">useFeedback{"()"}</h1>
         </Link>
         <Navbar />
         <Account />

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import TiptapEditor from "../../../components/Editor/Editor";
 import "./CreateComment.css";
 import { useMutation } from "@tanstack/react-query";
@@ -45,7 +45,11 @@ export default function CreateComment({ post, onSuccess }) {
       <form className="create-comment-container">
         <div className="create-comment-text">Create a comment:</div>
         <TiptapEditor ref={editorRef} className="create-comment-editor" />
-        <button onClick={handleClick} disabled={!buttonActive}>
+        <button
+          onClick={handleClick}
+          disabled={!buttonActive}
+          className="create-comment-button"
+        >
           Add comment
         </button>
         <div>{message}</div>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import Comment from "../Comment/Comment";
 import CreateComment from "../CreateComment/CreateComment";
 import { UserContextProvider } from "../../../context/userContext";

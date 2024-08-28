@@ -1,9 +1,12 @@
 import "./Rating.css";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContextProvider } from "../../../context/userContext";
 
 export default function Rating({ currentRating, userRating, commment }) {
+  const { userStatus } = useContext(UserContextProvider);
+
   const [currentUserRating, setCurrentUserRating] = useState(userRating);
   const [commentRating, setCommentRating] = useState(currentRating);
   const [buttonEnabled, setButtonEnabled] = useState(true);
@@ -17,13 +20,17 @@ export default function Rating({ currentRating, userRating, commment }) {
   });
 
   function handleClick(rating, type) {
+    if (!userStatus.loggedIn) {
+      return;
+    }
+
     if (!buttonEnabled) {
       return;
     }
     setButtonEnabled(false);
 
-    setCurrentUserRating(rating);
     const newRating = calculateOptimisticRating(rating, type);
+    setCurrentUserRating(rating);
     setCommentRating(newRating);
 
     const payload = { comment: commment, rating: rating };
@@ -35,30 +42,33 @@ export default function Rating({ currentRating, userRating, commment }) {
   }
 
   function handleSuccess(response) {
-    console.log(response);
     setButtonEnabled(true);
   }
 
   function calculateOptimisticRating(change, type) {
-    if (change === userRating) {
-      return userRating;
+    if (change === 1 && currentUserRating === -1) {
+      return Number(commentRating) + 2;
+    }
+
+    if (change === 1 && type === "up") {
+      return Number(commentRating) + 1;
+    }
+
+    if (change === 0 && type === "up") {
+      return Number(commentRating) - 1;
+    }
+
+    if (change === -1 && currentUserRating === 1) {
+      return Number(commentRating) - 2;
+    }
+
+    if (change === -1) {
+      return Number(commentRating) - 1;
     }
 
     if (change === 0 && type === "down") {
-      return Number(userRating - 1);
+      return Number(commentRating) + 1;
     }
-
-    if (change === -1 && type === "down" && userRating === 0) {
-      return Number(userRating) - 1;
-    }
-
-    if (change === -1 && type === "down") {
-      return Number(userRating) - 2;
-    }
-
-    return change === 0
-      ? Number(currentUserRating) - 1
-      : Number(currentUserRating) + change;
   }
 
   return (
@@ -67,6 +77,7 @@ export default function Rating({ currentRating, userRating, commment }) {
         {currentUserRating === 1 ? (
           <img
             src="/icons/thumbs-up-solid.svg"
+            className="rating-icon"
             width={size}
             height={size}
             onClick={() => {
@@ -76,15 +87,17 @@ export default function Rating({ currentRating, userRating, commment }) {
         ) : (
           <img
             src="/icons/thumbs-up-regular.svg"
+            className="rating-icon"
             width={size}
             height={size}
             onClick={() => handleClick(1, "up")}
           />
         )}
-        <div>{commentRating}</div>
+        <div className="rating-text">{commentRating}</div>
         {currentUserRating === -1 ? (
           <img
             src="/icons/thumbs-down-solid.svg"
+            className="rating-icon"
             width={size}
             height={size}
             onClick={() => {
@@ -94,6 +107,7 @@ export default function Rating({ currentRating, userRating, commment }) {
         ) : (
           <img
             src="/icons/thumbs-down-regular.svg"
+            className="rating-icon"
             width={size}
             height={size}
             onClick={() => handleClick(-1, "down")}

@@ -3,12 +3,15 @@
   color: var(--text-header-main);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 10rem;
   padding-left: 5rem;
   padding-right: 5rem;
 }
 
 .category-container {
+  display: flex;
+  flex-direction: column;
   width: fit-content;
   cursor: pointer;
   font-family: var(--font-body);
@@ -17,8 +20,29 @@
 .navbar-create-post {
   cursor: pointer;
   font-family: var(--font-body);
+  width: fit-content;
+  height: fit-content;
 }
 
 .navbar-create-post-nouser {
   cursor: pointer;
+}
+@media (max-width: 1000px) {
+  .navbar-container {
+    gap: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .navbar-container {
+    gap: 1rem;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+  }
+
+  .navbar-create-post-nouser {
+    display: none;
+  }
 }

@@ -20,3 +20,9 @@
   color: var(--text-content-second);
   font-family: var(--font-body);
 }
+
+@media (max-width: 1200px) {
+  .single-post-page-container {
+    max-width: 90%;
+  }
+}

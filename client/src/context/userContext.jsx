@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { createContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import getData from "../helpers/getData";
 export const UserContextProvider = createContext();

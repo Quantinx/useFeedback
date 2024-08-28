@@ -1,4 +1,4 @@
-import { useEffect, useRef, useContext, useState } from "react";
+import { useRef, useContext, useState } from "react";
 import { UserContextProvider } from "../../../context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
