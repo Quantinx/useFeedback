@@ -43,3 +43,20 @@
   display: block;
   width: fit-content;
 }
+
+@media (max-width: 1200px) {
+  .home-container {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .home-banner-image {
+    width: 90vw;
+    aspect-ratio: 149/50;
+    height: auto;
+  }
+
+  .home-main-text {
+    width: 90vw;
+  }
+}
