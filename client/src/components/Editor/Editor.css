@@ -69,3 +69,9 @@
 .toolbar {
   padding: 1rem;
 }
+
+@media (max-width: 800px) {
+  .editor-container {
+    touch-action: none;
+  }
+}
