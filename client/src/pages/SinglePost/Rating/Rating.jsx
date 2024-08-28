@@ -42,13 +42,10 @@ export default function Rating({ currentRating, userRating, commment }) {
   }
 
   function handleSuccess(response) {
-    console.log(response);
     setButtonEnabled(true);
   }
 
   function calculateOptimisticRating(change, type) {
-    console.log(change, type);
-
     if (change === 1 && currentUserRating === -1) {
       return Number(commentRating) + 2;
     }
@@ -62,7 +59,6 @@ export default function Rating({ currentRating, userRating, commment }) {
     }
 
     if (change === -1 && currentUserRating === 1) {
-      console.log("setting 1 to -1");
       return Number(commentRating) - 2;
     }
 

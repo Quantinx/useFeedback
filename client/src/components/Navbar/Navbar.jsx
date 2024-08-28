@@ -29,7 +29,6 @@ export default function Navbar() {
   }
 
   function toggleCreatePost(visible) {
-    console.log(visible);
     setCreatePostVisible(visible);
   }
 

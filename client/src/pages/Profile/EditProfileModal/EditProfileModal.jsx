@@ -31,7 +31,7 @@ export default function EditProfileModal({ user, visible, closeModal }) {
       full_name: fullNameField,
       profile_content: profileContent,
     };
-    console.log(payload);
+
     setButtonEnabled(false);
     profileMutator.mutate({
       url: "/api/users/",
