@@ -60,7 +60,28 @@ async function getUserDataForProfile(userID) {
     response.data = userData[0];
     response.status = 200;
   } catch (error) {
-    response.data = "an erorr has occured";
+    response.data = "an error has occured";
+    response.status = 500;
+  }
+  return response;
+}
+
+async function getProfileByUsername(username) {
+  const response = {};
+  try {
+    const userData = await db("useFeedback_users")
+      .select("username", "full_name", "profile_content", "profile_picture")
+      .where("username", username);
+
+    if (!userData.length) {
+      response.status = 404;
+      response.data = "User not found";
+      return response;
+    }
+    response.data = userData[0];
+    response.status = 200;
+  } catch (error) {
+    response.data = "an error has occured";
     response.status = 500;
   }
   return response;
@@ -95,4 +116,5 @@ module.exports = {
   createUser,
   getUserDataForProfile,
   updateUser,
+  getProfileByUsername,
 };
