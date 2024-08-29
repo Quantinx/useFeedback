@@ -8,6 +8,8 @@ import queryClient from "./query/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { UserProvider } from "./context/userContext.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
+import UserPosts from "./pages/UserPosts/UserPosts.jsx";
+import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
               <Route path="/categories/:categoryParam" element={<Posts />} />
               <Route path="/posts/:postParam" element={<SinglePost />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/users/:username" element={<UserProfile />} />
+              <Route path="/users/:username/posts" element={<UserPosts />} />
             </Routes>
           </BrowserRouter>
         </UserProvider>
