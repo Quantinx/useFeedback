@@ -2,36 +2,53 @@ import { useParams } from "react-router-dom";
 import getData from "../../helpers/getData";
 import PostPreview from "../../components/Post/Post";
 import "./UserPosts.css";
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 export default function UserPosts() {
   const { username } = useParams();
   const queryURL = "/api/posts?username=" + username;
-  const { data, isLoading, isError, fetchNextPage, hasNextPage } =
-    useInfiniteQuery({
-      queryKey: [queryURL],
-      queryFn: ({ pageParam }) => getData(queryURL + "&page=" + pageParam),
-      initialPageParam: 1,
-      refetchOnWindowFocus: false,
-      refetchOnMount: true,
-      staleTime: 120000,
-      getNextPageParam: (lastPage) => {
-        const { currentPage, perPage, to } = lastPage.pagination;
-        const hasNextPage = to >= currentPage * perPage;
-        return hasNextPage ? Number(currentPage) + 1 : undefined;
-      },
-      getPreviousPageParam: (firstPage) => {
-        const { currentPage } = firstPage.pagination;
-        return currentPage > 1 ? currentPage - 1 : undefined;
-      },
-    });
+  const {
+    data,
+    isLoading,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: [queryURL],
+    queryFn: ({ pageParam }) => getData(queryURL + "&page=" + pageParam),
+    initialPageParam: 1,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    staleTime: 120000,
+    getNextPageParam: (lastPage) => {
+      const { currentPage, perPage, to } = lastPage.pagination;
+      const hasNextPage = to >= currentPage * perPage;
+      return hasNextPage ? Number(currentPage) + 1 : undefined;
+    },
+    getPreviousPageParam: (firstPage) => {
+      const { currentPage } = firstPage.pagination;
+      return currentPage > 1 ? currentPage - 1 : undefined;
+    },
+  });
+
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      handlePageChange();
+    }
+  }, [inView]);
 
   function handlePageChange() {
     if (!hasNextPage) {
-      alert("No new page avail");
+      return;
     }
+    console.log("fetching next page");
     fetchNextPage();
   }
-  console.log(data);
+
   return (
     <>
       <article className="user-post-page-container">
@@ -50,8 +67,11 @@ export default function UserPosts() {
             })}
           </div>
         )}
+        <div ref={ref}></div>
+        {isFetchingNextPage && (
+          <div style={{ color: "white" }}>Loading next page</div>
+        )}
       </article>
-      <button onClick={handlePageChange}>Next page</button>
     </>
   );
 }
