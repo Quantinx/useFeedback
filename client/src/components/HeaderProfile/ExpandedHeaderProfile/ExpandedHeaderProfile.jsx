@@ -14,7 +14,12 @@ export default function ExpandedHeaderProfile({ user, visible, hideModal }) {
           >
             View Profile
           </Link>
-          <Link className="expanded-header-profile-link">View Posts</Link>
+          <Link
+            className="expanded-header-profile-link"
+            to={"/users/" + user.username + "/posts"}
+          >
+            View Posts
+          </Link>
           <Link className="expanded-header-profile-link">Logout</Link>
         </div>
       )}

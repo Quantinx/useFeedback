@@ -4,6 +4,11 @@
   gap: 0.5rem;
 }
 
+.user-profile-card-link {
+  color: var(--text-content-main);
+  text-decoration: none;
+}
+
 .user-profile-card-pfp-img {
   border-radius: 50%;
 }
