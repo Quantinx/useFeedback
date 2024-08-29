@@ -18,7 +18,11 @@ export default function EditProfileModal({ user, visible, closeModal }) {
     mutationKey: "profile",
     mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
     onSuccess: (response) => {
-      setMessage("Profile updated successfully!");
+      if (response.status === 200) {
+        setMessage("Profile updated successfully!");
+      } else {
+        setMessage("Failed to update profile");
+      }
       setButtonEnabled(true);
     },
   });
@@ -74,7 +78,7 @@ export default function EditProfileModal({ user, visible, closeModal }) {
                 className="edit-profile-input"
                 value={fullNameField}
                 onChange={(e) => {
-                  setNameField(e.target.value);
+                  setFullNameField(e.target.value);
                 }}
               />
             </div>
