@@ -45,7 +45,7 @@ export default function UserPosts() {
     if (!hasNextPage) {
       return;
     }
-    console.log("fetching next page");
+
     fetchNextPage();
   }
 
