@@ -31,7 +31,16 @@ userRouter.patch("/", async (req, res) => {
   }
 
   const schema = Joi.object({
-    username: Joi.string().min(5).max(20),
+    username: Joi.string()
+      .min(5)
+      .max(20)
+      .pattern(
+        /^[a-zA-Z0-9_-]*$/,
+        "alphanumeric with hyphens and underscores, no spaces"
+      )
+      .message(
+        "Username must be betweeen 5-20 characters and can only contain letters, numbers, underscores and dashes"
+      ),
     full_name: Joi.string().min(5).max(20),
     profile_picture: Joi.string().uri(),
     profile_content: Joi.string().min(5).max(255),
