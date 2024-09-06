@@ -103,6 +103,11 @@ async function updateUser(userID, payload) {
     }
   } catch (error) {
     console.log(error);
+    if ((error.code = "ER_DUP_ENTRY")) {
+      response.data = "Username is already in use";
+      response.status = 400;
+      return response;
+    }
     response.data = "an error has occured";
     response.status = 500;
   }

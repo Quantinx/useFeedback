@@ -1,5 +1,6 @@
 const express = require("express");
 const postRouter = express.Router();
+const Joi = require("joi");
 
 const {
   getPosts,
@@ -13,8 +14,17 @@ postRouter.get("/", async (req, res) => {
   const category = req.query.category;
   const page = req.query.page;
   const username = req.query.username;
+
+  const pageSchema = Joi.number().min(1);
+
+  const pageRes = pageSchema.validate(page);
+
   if (!category && !username) {
     return res.status(400).json({ message: "missing parameters" });
+  }
+
+  if (pageRes.error) {
+    return res.status(400).json({ message: "page must be a number above 1" });
   }
   const posts = await getPosts(category, username, page);
   res.json(posts);
