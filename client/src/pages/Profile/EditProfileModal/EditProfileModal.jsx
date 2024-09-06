@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
 import * as Yup from "yup";
+import queryClient from "../../../query/queryClient";
 import "./EditProfileModal.css";
 
 export default function EditProfileModal({ user, visible, closeModal }) {
@@ -21,6 +22,7 @@ export default function EditProfileModal({ user, visible, closeModal }) {
     onSuccess: (response) => {
       if (response.status === 200) {
         setMessage("Profile updated successfully!");
+        queryClient.invalidateQueries("user");
       } else {
         setMessage("Failed to update profile");
       }
