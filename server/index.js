@@ -5,11 +5,11 @@ require("dotenv").config();
 const PORT = process.env.SERVER_PORT;
 
 const bcrypt = require("bcrypt");
-const session = require("express-session");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
 const jwt = require("jsonwebtoken");
+const Joi = require("joi");
 
 server.use(cookieParser());
 
@@ -75,26 +75,28 @@ server.post("/api/register", async (req, res) => {
   const email = data.email;
   const password = data.password;
   const username = data.username;
-  if (!password) {
-    res.status(500);
-    res.json({ error: "missing password" });
+  const schema = Joi.object({
+    username: Joi.string()
+      .min(5)
+      .max(20)
+      .pattern(
+        /^[a-zA-Z0-9_-]*$/,
+        "alphanumeric with hyphens and underscores, no spaces"
+      )
+      .message(
+        "Username must be betweeen 5-20 characters and can only contain letters, numbers, underscores and dashes"
+      ),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(5).max(30).required(),
+  }).unknown(false);
+
+  const { error, value } = schema.validate({ password, username, email });
+
+  if (error) {
+    res.status(400).json(error.details);
     return;
   }
-  if (!email) {
-    res.status(500);
-    res.json({ error: "missing email" });
-    return;
-  }
-  if (!username) {
-    res.status(500);
-    res.json({ error: "missing username" });
-    return;
-  }
-  if (await getUserByEmail(email)) {
-    res.status(500);
-    res.json({ error: "email already exists" });
-    return;
-  }
+
   if (await getUserByUsername(username)) {
     res.status(500);
     res.json({ error: "user already exists" });
@@ -142,6 +144,10 @@ const { getStacks } = require("./db/stackHelpers");
 server.get("/api/stacks", async (req, res) => {
   const stacks = await getStacks();
   res.status(stacks.status).json(stacks.data);
+});
+
+server.post("/api/logout", (req, res) => {
+  res.clearCookie("token").status(200).json({ message: "Logout successful" });
 });
 
 //
