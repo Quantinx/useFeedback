@@ -7,6 +7,7 @@ export default function CreateComment({ post, onSuccess }) {
   const editorRef = useRef(null);
   const [message, setMessage] = useState();
   const [buttonActive, setButtonActive] = useState(true);
+  const [editorVisible, setEditorVisible] = useState(false);
   const commentMutator = useMutation({
     mutationKey: "newcomment",
     mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
@@ -43,15 +44,28 @@ export default function CreateComment({ post, onSuccess }) {
   return (
     <>
       <form className="create-comment-container">
-        <div className="create-comment-text">Create a comment:</div>
-        <TiptapEditor ref={editorRef} className="create-comment-editor" />
-        <button
-          onClick={handleClick}
-          disabled={!buttonActive}
-          className="create-comment-button"
+        <div
+          className="create-comment-text"
+          onClick={() => {
+            setEditorVisible(!editorVisible);
+          }}
         >
-          Add comment
-        </button>
+          Create a comment:
+        </div>
+        <div
+          className={`create-comment-editor ${
+            editorVisible ? "" : "create-comment-hidden"
+          }`}
+        >
+          <TiptapEditor ref={editorRef} />
+          <button
+            onClick={handleClick}
+            disabled={!buttonActive}
+            className="create-comment-button"
+          >
+            Add comment
+          </button>
+        </div>
         <div>{message}</div>
       </form>
     </>

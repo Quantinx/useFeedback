@@ -1,10 +1,22 @@
 .create-comment-container {
-  margin-top: 4rem;
+  margin-top: 2rem;
   max-width: 50rem;
 }
 
 .create-comment-text {
   color: var(--text-content-main);
+  cursor: pointer;
+  user-select: none;
+}
+
+.create-comment-editor {
+  max-height: 800px;
+  transition: max-height 0.2s ease-out;
+}
+
+.create-comment-hidden {
+  overflow-y: hidden;
+  max-height: 0px;
 }
 
 .create-comment-button {
