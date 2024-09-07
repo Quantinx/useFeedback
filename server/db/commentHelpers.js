@@ -63,15 +63,19 @@ async function getComments(post, page = 1, perPage, user = null) {
 async function addComment(user_ID, post_ID, content) {
   const response = {};
   try {
-    await db("useFeedback_comments").insert({
-      user_ID: user_ID,
-      post_ID: post_ID,
-      comment_content: content,
-    });
+    const [commentID] = await db("useFeedback_comments")
+      .insert({
+        user_ID: user_ID,
+        post_ID: post_ID,
+        comment_content: content,
+      })
+      .returning("comment_ID");
     response.message = "comment added successfully";
+    response.comment = commentID;
     response.status = 200;
   } catch (error) {
     response.message = "an error has occured";
+    response.comment = null;
     response.status = 500;
     console.log(error);
   }

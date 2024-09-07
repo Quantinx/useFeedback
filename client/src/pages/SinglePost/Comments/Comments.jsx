@@ -39,9 +39,15 @@ export default function Comments({ post }) {
   const { setLoginVisible } = useModalStore();
 
   function newComment(comment) {
+    const date = Date.now();
     const commentData = {
       comment_content: JSON.stringify(comment.content),
       username: userStatus.data.username,
+      comment_ID: comment.id,
+      date_created: date,
+      user_rating: 0,
+      total_rating: "0",
+      profile_picture: userStatus.data.profile_picture,
     };
     setOptimisticComment(commentData);
   }
@@ -69,12 +75,13 @@ export default function Comments({ post }) {
       {!isLoading && !isError && (
         <div>
           {userStatus.loggedIn ? (
-            <CreateComment post={post} onSuccess={newComment} />
+            <CreateComment post={post} onNewComment={newComment} />
           ) : (
             <div className="comment-nouser-text" onClick={handleLoginClick}>
               Log in to post a comment
             </div>
           )}
+          {optimisticComment && <Comment comment={optimisticComment} />}
           {data.pages.map((page, i) => {
             return (
               <div key={i}>
@@ -84,7 +91,6 @@ export default function Comments({ post }) {
               </div>
             );
           })}
-          {optimisticComment && <Comment comment={optimisticComment} />}
           <div ref={ref}></div>
         </div>
       )}
