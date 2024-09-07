@@ -31,3 +31,7 @@
   border-radius: 0.5rem;
   cursor: pointer;
 }
+
+.create-comment-message {
+  color: var(--text-content-main);
+}

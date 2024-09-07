@@ -76,7 +76,7 @@ export default function CreateComment({ post, onNewComment }) {
             Add comment
           </button>
         </div>
-        <div>{message}</div>
+        <div className="create-comment-message">{message}</div>
       </form>
     </>
   );
