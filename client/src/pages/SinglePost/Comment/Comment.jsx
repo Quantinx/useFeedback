@@ -15,6 +15,7 @@ export default function Comment({ comment }) {
             username={comment.username}
             profilePicture={comment.profile_picture}
           />
+          <div className="comment-date">{localDate + " at " + localTime}</div>
         </div>
         <div>
           <Rating
@@ -22,9 +23,9 @@ export default function Comment({ comment }) {
             currentRating={comment.total_rating}
             commment={comment.comment_ID}
           />
-          <div className="comment-date">{localDate + " at " + localTime}</div>
         </div>
       </section>
+
       <div className="comment-content-container">
         <RichTextViewer content={comment.comment_content} />
       </div>
