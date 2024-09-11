@@ -7,7 +7,6 @@ export default function ExpandedHeaderProfile({ user, visible, hideModal }) {
         <div className="expanded-header-parent">
           <nav className="expanded-header-profile-container">
             <div className="expanded-header-text-container">
-              <div>{user.username}</div>
               <div>{user.full_name}</div>
               <Link
                 onClick={hideModal}
@@ -17,6 +16,7 @@ export default function ExpandedHeaderProfile({ user, visible, hideModal }) {
                 View Profile
               </Link>
               <Link
+                onClick={hideModal}
                 className="expanded-header-profile-link"
                 to={"/users/" + user.username + "/posts"}
               >
