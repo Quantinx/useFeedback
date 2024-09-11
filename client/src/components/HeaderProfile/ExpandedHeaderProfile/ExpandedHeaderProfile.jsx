@@ -1,6 +1,15 @@
+import sendData from "../../../helpers/sendData";
 import "./ExpandedHeaderProfile.css";
 import { Link } from "react-router-dom";
+import queryClient from "../../../query/queryClient";
 export default function ExpandedHeaderProfile({ user, visible, hideModal }) {
+  async function handleLogout() {
+    const response = await sendData("/api/logout", "POST");
+    if (response.status === 200) {
+      queryClient.invalidateQueries("user");
+      hideModal();
+    }
+  }
   return (
     <>
       {visible && (
@@ -22,7 +31,12 @@ export default function ExpandedHeaderProfile({ user, visible, hideModal }) {
               >
                 View Posts
               </Link>
-              <Link className="expanded-header-profile-link">Logout</Link>
+              <Link
+                onClick={handleLogout}
+                className="expanded-header-profile-link"
+              >
+                Logout
+              </Link>
             </div>
           </nav>
         </div>
