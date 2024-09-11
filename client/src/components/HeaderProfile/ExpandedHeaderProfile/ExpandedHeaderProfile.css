@@ -2,7 +2,6 @@
   position: relative;
   margin: 0;
   padding: 0;
-  translate: 100px -50px;
 }
 
 .expanded-header-profile-container {
@@ -16,8 +15,7 @@
   cursor: default;
   width: 250px;
   height: 250px;
-  right: 1rem;
-  top: 3.5rem;
+
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
 
   background-color: var(--bg-main);
@@ -36,4 +34,19 @@
   border: #bbcccd solid 1px;
   text-decoration: none;
   border-radius: 0.5rem;
+}
+
+@media (max-width: 1450px) {
+  .expanded-header-parent {
+    position: static;
+  }
+  .expanded-header-profile-container {
+    right: 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .expanded-header-profile-container {
+    width: 180px;
+  }
 }
