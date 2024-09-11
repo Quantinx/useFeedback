@@ -3,18 +3,30 @@ import TiptapEditor from "../../../components/Editor/Editor";
 import "./CreateComment.css";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
-export default function CreateComment({ post, onSuccess }) {
+export default function CreateComment({ post, onNewComment }) {
   const editorRef = useRef(null);
   const [message, setMessage] = useState();
   const [buttonActive, setButtonActive] = useState(true);
+  const [editorVisible, setEditorVisible] = useState(false);
   const commentMutator = useMutation({
     mutationKey: "newcomment",
     mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
     onSuccess: (response) => {
       console.log(response.status);
+      const content = editorRef.current.getEditorData();
+
+      const updatePayload = {
+        post: post,
+        content: content,
+        id: response.data.comment,
+      };
+      console.log(updatePayload);
+      onNewComment(updatePayload);
+
       if (response.status === 200) {
         setMessage("Post sucessfully added");
         setButtonActive(true);
+
         editorRef.current.clearEditor();
       }
     },
@@ -32,7 +44,6 @@ export default function CreateComment({ post, onSuccess }) {
       return;
     }
     setButtonActive(false);
-    onSuccess(payload);
     commentMutator.mutate({
       url: "/api/comments",
       method: "POST",
@@ -43,16 +54,29 @@ export default function CreateComment({ post, onSuccess }) {
   return (
     <>
       <form className="create-comment-container">
-        <div className="create-comment-text">Create a comment:</div>
-        <TiptapEditor ref={editorRef} className="create-comment-editor" />
-        <button
-          onClick={handleClick}
-          disabled={!buttonActive}
-          className="create-comment-button"
+        <div
+          className="create-comment-text"
+          onClick={() => {
+            setEditorVisible(!editorVisible);
+          }}
         >
-          Add comment
-        </button>
-        <div>{message}</div>
+          Create a comment:
+        </div>
+        <div
+          className={`create-comment-editor ${
+            editorVisible ? "" : "create-comment-hidden"
+          }`}
+        >
+          <TiptapEditor ref={editorRef} />
+          <button
+            onClick={handleClick}
+            disabled={!buttonActive}
+            className="create-comment-button"
+          >
+            Add comment
+          </button>
+        </div>
+        <div className="create-comment-message">{message}</div>
       </form>
     </>
   );

@@ -31,3 +31,10 @@
   color: red;
   cursor: pointer;
 }
+
+@media (max-width: 500px) {
+  .profile-page-container {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}

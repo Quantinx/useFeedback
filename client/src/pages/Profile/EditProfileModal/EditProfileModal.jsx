@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
+import * as Yup from "yup";
+import queryClient from "../../../query/queryClient";
 import "./EditProfileModal.css";
 
 export default function EditProfileModal({ user, visible, closeModal }) {
@@ -20,11 +22,25 @@ export default function EditProfileModal({ user, visible, closeModal }) {
     onSuccess: (response) => {
       if (response.status === 200) {
         setMessage("Profile updated successfully!");
+        queryClient.invalidateQueries("user");
       } else {
         setMessage("Failed to update profile");
       }
       setButtonEnabled(true);
     },
+  });
+
+  const profileSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(5)
+      .max(20)
+      .matches(
+        /^[a-zA-Z0-9_-]*$/,
+        "Username can only contain letters, numbers, and underscores"
+      ),
+    profile_picture: Yup.string().min(5).max(255),
+    full_name: Yup.string().min(5).max(20),
+    profile_content: Yup.string().min(5).max(255),
   });
 
   function handleSave(e) {
@@ -36,12 +52,20 @@ export default function EditProfileModal({ user, visible, closeModal }) {
       profile_content: profileContent,
     };
 
-    setButtonEnabled(false);
-    profileMutator.mutate({
-      url: "/api/users/",
-      method: "PATCH",
-      payload: payload,
-    });
+    profileSchema
+      .validate(payload, { abortEarly: true })
+      .then((valid) => {
+        setButtonEnabled(false);
+        profileMutator.mutate({
+          url: "/api/users/",
+          method: "PATCH",
+          payload: payload,
+        });
+      })
+      .catch((err) => {
+        console.log("First error message:", err.errors[0]);
+        setMessage(err.errors[0]);
+      });
   }
   return (
     <>

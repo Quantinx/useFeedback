@@ -13,3 +13,20 @@
   padding-bottom: 1rem;
   margin-bottom: 2rem;
 }
+
+.comment-date {
+  margin-left: 56px;
+  translate: 0px -10px;
+  color: var(--text-content-second);
+}
+
+@media (max-width: 500px) {
+  .comment-title-container {
+    font-size: 14px;
+    height: fit-content;
+  }
+
+  .comment-date {
+    left: 0;
+  }
+}

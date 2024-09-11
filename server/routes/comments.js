@@ -41,7 +41,9 @@ commentRouter.post("/", async (req, res) => {
   }
 
   const response = await addComment(user, post, content);
-  res.status(response.status).json(response.message);
+  res
+    .status(response.status)
+    .json({ message: response.message, comment: response.comment });
 });
 
 commentRouter.patch("/", async (req, res) => {

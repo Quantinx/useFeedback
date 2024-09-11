@@ -31,3 +31,9 @@
 .form-message {
   padding-bottom: 1rem;
 }
+
+@media (max-width: 800px) {
+  .form-container {
+    margin-top: 5rem;
+  }
+}
