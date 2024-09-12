@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TiptapEditor from "../../Editor/Editor";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
+import { toast } from "react-toastify";
 
 export default function CreatePost({ visible, categories, handleClose }) {
   const catergoryRef = useRef();
@@ -12,24 +13,21 @@ export default function CreatePost({ visible, categories, handleClose }) {
 
   const redirect = useNavigate();
 
-  const [message, setMessage] = useState();
-
   const postMutator = useMutation({
     mutationKey: "post",
     mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
     onSuccess: (response) => {
       if (response.status === 200) {
-        setMessage("Post added sucessfully ");
+        toast.success("Post added sucessfully");
         redirect("/posts/" + response.data.post);
         handleClose(false);
-        setMessage(null);
       }
       if (response.status === 500) {
-        setMessage("Failed to create post");
+        toast.error("Failed to create post");
       }
     },
     onError: () => {
-      setMessage(
+      toast.error(
         "An unknown error has occured, please check your connection or try again later"
       );
     },
@@ -42,15 +40,15 @@ export default function CreatePost({ visible, categories, handleClose }) {
     const content = editorRef.current.getEditorData();
     const contentLength = editorRef.current.getContentLength();
     if (!category) {
-      setMessage("Please select a category");
+      toast.warn("Please select a category");
       return;
     }
     if (title.length < 6) {
-      setMessage("Please enter a longer title");
+      toast.warn("Please enter a longer title");
       return;
     }
     if (contentLength < 10) {
-      setMessage("post too short");
+      toast.warn("Your post is too short");
       return;
     }
     const payload = { stack: category, title: title, content: content };
@@ -65,7 +63,6 @@ export default function CreatePost({ visible, categories, handleClose }) {
             <div
               className="create-post-close"
               onClick={() => {
-                setMessage(null);
                 handleClose(false);
               }}
             >
@@ -114,7 +111,6 @@ export default function CreatePost({ visible, categories, handleClose }) {
             >
               Create post
             </button>
-            {message}
           </form>
         </div>
       )}

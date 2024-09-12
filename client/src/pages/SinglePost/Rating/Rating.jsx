@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
 import { useState, useContext } from "react";
 import { UserContextProvider } from "../../../context/userContext";
-
+import { toast } from "react-toastify";
 export default function Rating({ currentRating, userRating, commment }) {
   const { userStatus } = useContext(UserContextProvider);
 
@@ -21,10 +21,12 @@ export default function Rating({ currentRating, userRating, commment }) {
 
   function handleClick(rating, type) {
     if (!userStatus.loggedIn) {
+      toast.info("Please log in to rate a comment");
       return;
     }
 
     if (!buttonEnabled) {
+      toast.warn("Please wait...");
       return;
     }
     setButtonEnabled(false);

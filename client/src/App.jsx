@@ -10,13 +10,15 @@ import { UserProvider } from "./context/userContext.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import UserPosts from "./pages/UserPosts/UserPosts.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <UserProvider>
           <BrowserRouter>
+            <ToastContainer theme="dark" position="bottom-center" limit={5} />
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />

@@ -1,18 +1,17 @@
 import { useRef, useContext, useState } from "react";
-import { UserContextProvider } from "../../../context/userContext";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
 import "./Form.css";
 import queryClient from "../../../query/queryClient";
+import { toast } from "react-toastify";
 export default function LoginForm({ closeWindow }) {
-  const { checkLogin } = useContext(UserContextProvider);
-  const [message, setMessage] = useState();
+  const [buttonActive, setButtonActive] = useState(true);
   const loginMutation = useMutation({
     mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
     mutationKey: "login",
     onSuccess: (response) => {
       if (response.status === 200) {
-        setMessage("login successful");
+        toast.success("Login Successful!");
         queryClient.invalidateQueries("user");
         setTimeout(() => {
           closeWindow();
@@ -20,7 +19,8 @@ export default function LoginForm({ closeWindow }) {
       }
 
       if (response.status === 401) {
-        setMessage("Invalid Login");
+        setButtonActive(true);
+        toast.error("Invalid login");
       }
     },
     onError: (response) => {
@@ -30,6 +30,7 @@ export default function LoginForm({ closeWindow }) {
 
   function handleClick(e) {
     e.preventDefault();
+    setButtonActive(false);
     const payload = {
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -68,10 +69,14 @@ export default function LoginForm({ closeWindow }) {
           ref={passwordRef}
         ></input>
 
-        <button className="form-button" type="submit" onClick={handleClick}>
+        <button
+          className="form-button"
+          type="submit"
+          disabled={!buttonActive}
+          onClick={handleClick}
+        >
           Login
         </button>
-        <div className="form-message">{message}</div>
       </form>
     </>
   );
