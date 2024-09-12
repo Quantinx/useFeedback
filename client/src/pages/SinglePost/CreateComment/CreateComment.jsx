@@ -3,9 +3,9 @@ import TiptapEditor from "../../../components/Editor/Editor";
 import "./CreateComment.css";
 import { useMutation } from "@tanstack/react-query";
 import sendData from "../../../helpers/sendData";
+import { toast } from "react-toastify";
 export default function CreateComment({ post, onNewComment }) {
   const editorRef = useRef(null);
-  const [message, setMessage] = useState();
   const [buttonActive, setButtonActive] = useState(true);
   const [editorVisible, setEditorVisible] = useState(false);
   const commentMutator = useMutation({
@@ -24,7 +24,7 @@ export default function CreateComment({ post, onNewComment }) {
       onNewComment(updatePayload);
 
       if (response.status === 200) {
-        setMessage("Post sucessfully added");
+        toast.success("Comment sucessfully added");
         setButtonActive(true);
 
         editorRef.current.clearEditor();
@@ -40,7 +40,7 @@ export default function CreateComment({ post, onNewComment }) {
     const payload = { post: post, content: content };
 
     if (contentLength < 10) {
-      setMessage("Comment too short");
+      toast.warn("Comment too short");
       return;
     }
     setButtonActive(false);
@@ -76,7 +76,6 @@ export default function CreateComment({ post, onNewComment }) {
             Add comment
           </button>
         </div>
-        <div className="create-comment-message">{message}</div>
       </form>
     </>
   );

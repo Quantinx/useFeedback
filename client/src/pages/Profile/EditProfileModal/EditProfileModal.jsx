@@ -4,6 +4,7 @@ import sendData from "../../../helpers/sendData";
 import * as Yup from "yup";
 import queryClient from "../../../query/queryClient";
 import "./EditProfileModal.css";
+import { toast } from "react-toastify";
 
 export default function EditProfileModal({ user, visible, closeModal }) {
   const [nameField, setNameField] = useState(user.username);
@@ -14,17 +15,15 @@ export default function EditProfileModal({ user, visible, closeModal }) {
   const [profileContent, setProfileContent] = useState(user.profile_content);
   const [buttonEnabled, setButtonEnabled] = useState(true);
 
-  const [message, setMessage] = useState("");
-
   const profileMutator = useMutation({
     mutationKey: "profile",
     mutationFn: ({ url, method, payload }) => sendData(url, method, payload),
     onSuccess: (response) => {
       if (response.status === 200) {
-        setMessage("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
         queryClient.invalidateQueries("user");
       } else {
-        setMessage("Failed to update profile");
+        toast.error("Failed to update profile");
       }
       setButtonEnabled(true);
     },
@@ -63,8 +62,7 @@ export default function EditProfileModal({ user, visible, closeModal }) {
         });
       })
       .catch((err) => {
-        console.log("First error message:", err.errors[0]);
-        setMessage(err.errors[0]);
+        toast.warn(err.errors[0]);
       });
   }
   return (
@@ -137,7 +135,7 @@ export default function EditProfileModal({ user, visible, closeModal }) {
                 }}
               />
             </div>
-            <div>{message}</div>
+
             <button
               className="edit-profile-button"
               onClick={handleSave}
