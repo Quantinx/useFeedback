@@ -29,7 +29,7 @@ export default function Home() {
         <div className="home-content-container">
           <section>
             <h3>Network with experienced developers and juniors</h3>
-            <p>
+            <p className="home-content-text">
               Our community is a vibrant hub where both seasoned developers and
               enthusiastic juniors come together. Whether you’re looking to
               exchange ideas with industry veterans or connect with peers at
@@ -47,7 +47,7 @@ export default function Home() {
               Join a solution-oriented, friendly community, open for developers
               of any skill level
             </h3>
-            <p>
+            <p className="home-content-text">
               Step into a welcoming environment where developers of all skill
               levels come together to solve problems and share knowledge. Unlike
               other platforms, our community prioritizes kindness, patience, and
